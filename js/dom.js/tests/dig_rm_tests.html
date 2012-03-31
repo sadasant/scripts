@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset=utf-8>
+    <title> dom.js :: dom.get tests </title>
+  </head>
+  <body>
+    <b>dom.js :: dom.get tests</b>
+    <ul id="u0" class="c asdf qwerty">
+      <b>u0</b>
+      <li id="l0" class="_c">
+        l0
+        <ul id="u00" class="__c">
+          <b>u00</b>
+          <li id="l00" class="___c"> l00 </li>
+          <li id="l01" class="___c"> l01 </li>
+        </ul>
+        <ul id="u01" class="__c">
+          <b><a href="http://sadasant.com">u01</a></b>
+          <li id="l02" class="___c"> l02 </li>
+          <li id="l03" class="___c"> l03 </li>
+        </ul>
+      </li>
+      <li id="l1" class="_c">
+        l1
+        <ul id="u10" class="__c">
+          <b>u10</b>
+          <li id="l10" class="___c"> l10 </li>
+          <li id="l11" class="___c"> l11 </li>
+        </ul>
+        <ul id="u11" class="__c">
+          <b>u11</b>
+          <li id="l12" class="___c"> l12 </li>
+          <li id="l13" class="___c"> l13 </li>
+        </ul>
+      </li>
+    </ul>
+  </body>
+  <script src="../lib/dom.js"></script>
+  <script>
+    (function () {
+
+      // lazyness
+      var log = function () {
+        for (var i in arguments) {
+          var a = arguments[i]
+            , is_str = typeof a == 'string'
+          if (is_str) {
+            console.log('\n')
+            console.log(a)
+          } else {
+            console.log(a)
+          }
+        }
+      }
+
+      log(
+        "dom.js"
+
+      , " ___ digging ___ "
+
+      ,"(b = dom.dig('b'))"
+      , (b = dom.dig('b'))
+      ,"dom.add(b)"
+      , dom.add(b)
+
+      ,"(b = dom.dig(['b']))"
+      , (b = dom.dig(['b']))
+      ,"dom.add(b)"
+      , dom.add(b)
+
+      ,"(b = dom.dig(dom.get('b'))"
+      , (b = dom.dig(dom.get('b')))
+      ,"dom.add(b)"
+      , dom.add(b)
+
+      ,"dom.rm('b')" // dom.rm is a bind of dom.dig but dissabling cloning, so it's just the same.
+      , dom.rm('b')
+
+      ,"setTimeout(dom.add.bind({_args : [b]}), 1000)"
+      , setTimeout(dom.add.bind({_args : [b]}), 1000)
+
+      , setTimeout(function() {
+          log(
+           "dom.dig(b[3])"
+          , dom.dig(b[3])
+          );
+        }, 2000)
+
+      , "dom.js"
+      );
+
+      // TODO: dom.in().dig()
+      // TODO: Test all the callbacks in all the dom.js methods
+      // TODO: Github site and Wiki for dom.get
+      // TODO: deep code inspection
+
+    })()
+  </script>
+</html>

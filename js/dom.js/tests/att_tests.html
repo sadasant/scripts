@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset=utf-8>
+    <title> dom.js :: dom.get tests </title>
+  </head>
+  <body>
+    <b title='dom.js'>dom.js :: dom.att tests</b>
+    <ul id="u0" class="c asdf qwerty">
+      <b>u0</b>
+      <li id="l0" class="_c">
+        l0
+        <ul id="u00" class="__c">
+          <b>u00</b>
+          <li id="l00" class="___c"> l00 </li>
+          <li id="l01" class="___c"> l01 </li>
+        </ul>
+        <ul id="u01" class="__c">
+          <b><a href="http://sadasant.com">u01</a></b>
+          <li id="l02" class="___c"> l02 </li>
+          <li id="l03" class="___c"> l03 </li>
+        </ul>
+      </li>
+      <li id="l1" class="_c">
+        l1
+        <ul id="u10" class="__c">
+          <b>u10</b>
+          <li id="l10" class="___c"> l10 </li>
+          <li id="l11" class="___c"> l11 </li>
+        </ul>
+        <ul id="u11" class="__c">
+          <b>u11</b>
+          <li id="l12" class="___c"> l12 </li>
+          <li id="l13" class="___c"> l13 </li>
+        </ul>
+      </li>
+    </ul>
+  </body>
+  <script src="../lib/dom.js"></script>
+  <script>
+    (function () {
+
+      // lazyness
+      var log = function () {
+        for (var i in arguments) {
+          var a = arguments[i]
+            , is_str = typeof a == 'string'
+          if (is_str) {
+            console.log('\n')
+            console.log(a)
+          } else {
+            console.log(a)
+          }
+        }
+      }
+
+      log(
+        "dom.js"
+
+      , " _____ Getting attributes _____ "
+
+      ,"dom.att(dom.get('*'))"
+      , dom.att(dom.get('*'))
+
+      ,"dom.in('*').att()"
+      , dom.in('*').att()
+
+      ,"dom.in('li').att()"
+      , dom.in('li').att()
+
+      ,"dom.att(dom.get('li'))"
+      , dom.att(dom.get('li'))
+
+      ,"dom.in('._c').att()"
+      , dom.in('._c').att()
+
+      ,"dom.att(dom.get('._c'))"
+      , dom.att(dom.get('._c'))
+
+      ,"dom.in('#l11').att()"
+      , dom.in('#l11').att()
+
+      ,"dom.in('#l11').att('id')"
+      , dom.in('#l11').att('id')
+
+      ,"dom.att(dom.get('#l11'))"
+      , dom.att(dom.get('#l11'))
+
+      ,"dom.att(dom.get('b'))"
+      , dom.att(dom.get('b'))
+
+      ,"dom.in('b').att()"
+      , dom.in('b').att()
+
+      ,"dom.in('b').att('title')"
+      , dom.in('b').att('title')
+
+      , " _____ Setting attributes _____ "
+
+      ,"dom.in('#l11').att({style:'color:blue'})"
+      , dom.in('#l11').att({style:'color:blue'})
+
+      ,"dom.in('#l12').att('style','color:red')"
+      , dom.in('#l12').att('style','color:red')
+
+      ,"dom.in('.___c').att('onclick','alert(\":)\")')"
+      , dom.in('.___c').att('onclick','alert( ":) ")')
+
+      ,"dom.in('li').att('id','class')"
+      , dom.in('li').att('id','class')
+
+      , "dom.js"
+      );
+
+      // TODO: More tests?
+      // TODO: Github site and Wiki for dom.get
+
+    })()
+  </script>
+</html>

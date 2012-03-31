@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset=utf-8>
+    <title> dom.js :: dom.new & dom.add tests </title>
+  </head>
+  <body>
+  </body>
+  <script src="../lib/dom.js"></script>
+  <script>
+    (function () {
+
+      // lazyness
+      var log = function () {
+        for (var i in arguments) {
+          var a = arguments[i]
+            , is_str = typeof a == 'string'
+          if (is_str) {
+            console.log('\n')
+            console.log(a)
+          } else {
+            console.log(a)
+          }
+        }
+      }
+
+      log(
+        "dom.js"
+
+      , " _____ Storing Elements _____ "
+
+      ,"(black_div = dom.new('div#black-div',{style:'width:100px;height:100px;background:black'}))"
+      , (black_div = dom.new('div#black-div',{style:'width:100px;height:100px;background:black'}))
+
+      ,"(br = dom.new('br'))"
+      , (br = dom.new('br'))
+
+      ,"(sel = dom.new('select#sel'))"
+      , (sel = dom.new('select#sel'))
+
+      , (links = dom.new('a', [{href:'http://sadasant.com', html:'My Website<br>'}, {href:'http://bit.ly/P2PU-juegos-con-javascript', html:'My JS team<br>'}, {href:'http://tecnoyucas.org', html:'My team at the University<br>'}, {href:'http://something.com', html:'It\'s something<br><br>'}]))
+
+      , " _____ Creating And Asigning Elements _____ "
+
+      ,"dom.add(dom.get('b', 'hello'), br)"
+      , dom.add(dom.new('b', 'hello'), br)
+
+      ,"dom.add(dom.get('b.hello2', 'hello2'), '\n')"
+      , dom.add(dom.new('b.hello2', 'hello2'), '\n')
+
+      ,"dom.add(dom.get('b#hello3', 'hello3\n'))"
+      , dom.add(dom.new('b#hello3', 'hello3\n'))
+
+      ,"dom.add(dom.get('input', { type:'text', value:'Hello!' }))"
+      , dom.add(dom.new('input', { type:'text', value:'Hello!' }))
+
+      ,"dom.add(br.cloneNode(true), '\n', black_div)"
+      , dom.add(br.cloneNode(true), '\n', black_div)
+
+      ,"dom.add('\n', links)"
+      , dom.add('\n', links)
+
+      , " _____ dom.in().add() _____ "
+
+      ,"dom.in(black_div).add(dom.new('b','hi',{ style:'padding:40px;float:left;color:red' }))"
+      , dom.in(black_div).add(dom.new('b','hi',{ style:'padding:40px;float:left;color:red' }))
+
+      ,"(_sel = sel.cloneNode(true)) \n"
+      +"(sliced_href = location.href.split('/')) \n"
+      +"dom.in(_sel).add(dom.new('option.opt#op', sliced_href)) \n"
+      +"dom.add(_sel, '\n')"
+      , (_sel = sel.cloneNode(true))
+      , (sliced_href = location.href.split('/'))
+      , dom.in(_sel).add(dom.new('option.opt#op', sliced_href))
+      , dom.add(_sel, '\n')
+
+      ,"(_sel = sel.cloneNode(true)) \n"
+      +"dom.in(_sel).new('option.opt#op-:i', sliced_href) \n"
+      +"dom.add(_sel, '\n')"
+      , (_sel = sel.cloneNode(true))
+      , (sliced_href = location.href.split('/'))
+      , dom.in(_sel).new('option.opt#op-:i', sliced_href)
+      , dom.add(_sel, '\n')
+
+      ,"(_sel = sel.cloneNode(true)) \n"
+      +"dom.in(_sel).new('option.opt#op-:h', sliced_href) \n"
+      +"dom.add(_sel, '\n')"
+      , (_sel = sel.cloneNode(true))
+      , dom.in(_sel).new('option.opt#op-:h', sliced_href)
+      , dom.add(_sel, '\n')
+
+      ,"(_sel = sel.cloneNode(true)) \n"
+      +"(links = dom.get('a')) \n"
+      +"dom.in(_sel).new('option.opt#op-:href', links, dom.in(links).att('href')) \n"
+      +"dom.add(_sel)"
+      , (_sel = sel.cloneNode(true))
+      , (links = dom.get('a'))
+      , dom.in(_sel).new('option.opt#op-:href', links, dom.in(links).att('href'))
+      , dom.add(_sel)
+
+      , "dom.js"
+      );
+
+      // Happy new year! <3
+
+      // TODO: More tests?
+      // TODO: Github site and Wiki for dom.get
+
+    })()
+  </script>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset=utf-8>
+    <title> dom.js test with select element (0000) </title>
+  </head>
+  <body>
+  </body>
+  <script src="../lib/dom.js"></script>
+  <script>
+    (function () {
+
+      var options = [
+        'filter'
+      , 'forEach'
+      , 'map'
+      , 'some'
+      , 'reduce'
+      , 'reduceRight'
+      ]
+
+      var select = dom.new('select#sel')
+
+      options = dom.in(select).new('option.option#op-:i', options)
+      // or:
+      //   options = dom.new('option.option#op-:index', options)
+      //   dom.in(select).add(options)
+
+      console.log(options)
+      // [option#op-0.option, option#op-1.option, option#op-2.option, option#op-3.option, option#op-4.option, option#op-5.option]
+
+      dom.add('Method:\n\n')
+
+      dom.add(select)
+
+    })()
+  </script>
+</html>

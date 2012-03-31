@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset=utf-8>
+    <title> dom.js :: dom.get tests </title>
+  </head>
+  <body>
+    <b>dom.js :: dom.get tests</b>
+    <ul id="u0" class="c asdf qwerty">
+      <b>u0</b>
+      <li id="l0" class="_c">
+        l0
+        <ul id="u00" class="__c">
+          <b>u00</b>
+          <li id="l00" class="___c"> l00 </li>
+          <li id="l01" class="___c"> l01 </li>
+        </ul>
+        <ul id="u01" class="__c">
+          <b><a href="http://sadasant.com">u01</a></b>
+          <li id="l02" class="___c"> l02 </li>
+          <li id="l03" class="___c"> l03 </li>
+        </ul>
+      </li>
+      <li id="l1" class="_c">
+        l1
+        <ul id="u10" class="__c">
+          <b>u10</b>
+          <li id="l10" class="___c"> l10 </li>
+          <li id="l11" class="___c"> l11 </li>
+        </ul>
+        <ul id="u11" class="__c">
+          <b>u11</b>
+          <li id="l12" class="___c"> l12 </li>
+          <li id="l13" class="___c"> l13 </li>
+        </ul>
+      </li>
+    </ul>
+  </body>
+  <script src="../lib/dom.js"></script>
+  <script>
+    (function () {
+
+      // lazyness
+      var log = function () {
+        for (var i in arguments) {
+          var a = arguments[i]
+            , is_str = typeof a == 'string'
+          if (is_str) {
+            console.log('\n')
+            console.log(a)
+            console.log('\n')
+          } else {
+            console.log(a)
+          }
+        }
+      }
+
+      log(
+        "dom.js"
+
+      , " CSS: '*' Matches any element. "
+
+      , dom.get('*')
+      , dom.get('ul *')
+      , dom.get('b *')
+
+      , " CSS: 'E' Matches any E element (i.e., an element of type E). "
+
+      , dom.get('ul')
+      , dom.get('li')
+      , dom.get('script')
+      , dom.get('body')
+
+      , " CSS: 'E F' Matches any F element that is a descendant of an E element. "
+
+      , dom.get('ul li')
+      , dom.get('li ul')
+      , dom.get('li li')
+      , dom.get('body b')
+      , dom.get('body ul')
+
+      , " CSS: 'E > F' Matches any F element that is a child of an element E. "
+
+      , dom.get('ul > li')
+      , dom.get('li > ul')
+      , dom.get('li > li')     // Undefined // All the undefineds are intentionals.
+      , dom.get('body > b')
+      , dom.get('body > ul')
+
+      , " CSS: 'DIV.warning' Language specific. (In HTML, the same as DIV[class~=\"warning\"].) "
+
+      , dom.get('li._c')
+      , dom.get('LI._c')
+      , dom.get('b._c')         // Undefined
+      , dom.get('._c')
+      , dom.get('._w')          // Undefined
+      , dom.get('li._c UL')
+      , dom.get('li._c .c')     // Undefined
+      , dom.get('ul.c  ul')
+      , dom.get('UL.c li._c')
+
+      , " CSS: 'E:first-child' Matches element E when E is the first child of its parent. "
+
+      , dom.get('body:first-child')  // undefined
+      , dom.get('ul:first-child')
+      , dom.get('li._c:first-child') // undefined
+
+      , " CSS: 'E#myid' Matches any E element with ID equal to \"myid\". "
+
+      , dom.get('li#l0')
+      , dom.get('LI#l1')
+      , dom.get('b#l0')         // Undefined
+      , dom.get('#u0')
+      , dom.get('#wut')         // Undefined
+      , dom.get('li#l0 UL')
+      , dom.get('li#l0 #l11')   // Undefined
+      , dom.get('ul#u0 ul')
+      , dom.get('LI#l1 li#l13')
+
+      , " CSS: 'li + ul' Matches any F element immediately preceded by a sibling element E. "
+
+      , dom.get('b + ul')
+      , dom.get('b + li')
+      , dom.get('li + li')
+      , dom.get('ul + li') // undefined
+
+      , " CSS: More CSS selectors (they all should work) "
+      // dom.get('E[foo]')
+      , dom.get('a[href]')
+      // dom.get('E[foo="bar"]  ')
+      , dom.get('a[href="http://sadasant.com"]')
+      // dom.get('div:not(.home)')        // All the divs, without those with class="home"
+      , dom.get('ul:not(._c)')
+
+      // TODO?:
+      // dom.get('li - ul') Matches any F element immediately continued by a sibling element E.
+
+      , " More parammeters behaviour "
+
+      , dom.get(['ul'])
+      , dom.get('ul', 2)
+      , dom.get('#u00, #u01')
+      , dom.get('#u00', '#u01')
+      , dom.get('#u11, .__c')
+      , dom.get('#u0', '.__c')
+      , dom.get(['#u0'], ['.__c'])
+      , dom.get(['#u0'], '.__c')
+      , dom.get('li b', '#u0')
+      , dom.get(['li b'], '#u0')
+
+      , " dom.in binding dom.get "
+
+      , dom.in('._c').get(['b'])
+      , dom.in('.c').get('#l1')
+      , dom.in('ul').get('._c')
+      , dom.in('.___c').get('b')           // Undefined
+      , dom.in('.c').get('#ww')            // Undefined
+      , dom.in('b').get('.__c')            // Undefined
+      , dom.in('._c').get(['b'], '#l02')
+      , dom.in('._c').get('b', '#l02')
+      , dom.in('._c').get(['b', '#l02'])
+      , dom.in('.c').get('#l0 b', '#l1')
+      , dom.in('._c').get('b', 'table')
+      , dom.in('._c').get('canvas', 'h1') // Undefined
+      , dom.get(dom.in('.c').get('#l1'), '#l11')
+
+      , " dom.get('active') // get the current active element // document.activeElement "
+
+      , dom.get('active')
+
+      , " dom.get('selection') // get the current selection // document.getSelection "
+
+      , dom.get('selection')
+
+      , " dom.get({x: x, y: y}) // get the position of an element or finds an element in a determinded position "
+
+      , dom.in('a').get('position') // returns the position of a in { x:??, y:?? }
+      , dom.get({ x:88, y:138 })   // returns the element, in this case: the above <a/>
+
+      , " With document.getElement* "
+
+      , dom.get({id:'l1'})
+      , dom.get({id:'l1', class:"_c"})
+      , dom.get({id:'l1', class:"__c"}) // undefined
+      , dom.get({class:"__c"})
+      , dom.get({class:"__c", tag:'ul'})
+      , dom.get({tag:'ul'})
+
+      , ' Appending to a dom.get item '
+
+      , dom.get({id:'l11'}).appendChild(dom.new('b#hello0','hello0 '))
+      , dom.get('#l11').appendChild(dom.new('b#hello1','hello1 '))
+
+      // The examples below belong to more detailed dom.in or dom.new tests.
+      // I'll cover that on the days ahead.
+      , dom.in('#l11').new('b#hello2','hello2 ')
+      , dom.in('li.___c').new('b','hello') // Hello geeks, you should test this, it's beautiful
+
+      , "dom.js"
+      );
+
+      // TODO: Github site and Wiki for dom.get
+      // TODO: deep code inspection
+
+    })()
+  </script>
+</html>
