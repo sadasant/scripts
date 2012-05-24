@@ -47,12 +47,13 @@ fib = 1 : 2 : zipWith (+) fib (tail fib)
 -- condition is not satisfied.
 
 -- takeWhile (<=n) fib will give us all the fib numbers
--- whose values do not exceed n
+-- chopping it only with whose values do not exceed n
+-- Some lines below you'll see how I'm using takeWhile...
 
--- Now, we must loop through the choped list
+-- Also, after chopping the list, we must loop through it
 -- there are many ways, one way is to filter those that
--- aren't even, by dropWhile or filter or others,
--- and then sum the whole list up, which would require
+-- aren't even, by dropWhile or filter, or others,
+-- and then, sum the whole list up, which would require
 -- looping again over the list.
 
 -- On the other way, with fold we can effectively
