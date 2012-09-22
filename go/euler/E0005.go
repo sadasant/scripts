@@ -5,7 +5,7 @@
 //   http://projecteuler.net/problem=5
 //
 // How to run:
-//   ./Euler_0005 20
+//   go run E0005.go 20
 //
 
 package main

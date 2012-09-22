@@ -5,7 +5,7 @@
 //   http://projecteuler.net/problem=6
 //
 // How to run:
-//   ./Euler_0006 100
+//   go run E0006.go 100
 //
 
 package main

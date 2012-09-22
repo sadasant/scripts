@@ -5,23 +5,23 @@
 //   http://projecteuler.net/problem=4
 //
 // How to run:
-//   ./Euler_0004 3
+//   go run E0004.go 3
 //
 
 package main
 
 import (
 	"flag"
-	"strconv"
 	"math"
+	"strconv"
 )
 
 func reverse(s string) string {
 	runes := []rune(s)
-	i, j := 0, len(runes) - 1
+	i, j := 0, len(runes)-1
 	for i < j {
 		runes[i], runes[j] = runes[j], runes[i]
-		i, j = i+1, j-1 
+		i, j = i+1, j-1
 	}
 	return string(runes)
 }
