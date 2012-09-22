@@ -11,7 +11,6 @@
 package main
 
 import (
-	"fmt"
 	"flag"
 	"strconv"
 	"math"
@@ -21,7 +20,7 @@ func main() {
 
 	// Input
 	flag.Parse()
-	n, _ := strconv.Atof64(flag.Arg(0))
+	n, _ := strconv.ParseFloat(flag.Arg(0), 64)
 
 	// Variables
 	sum_sq, sq_sum := 0.0, 0.0
@@ -34,5 +33,5 @@ func main() {
 	sq_sum = math.Pow(sq_sum, 2.0)
 
 	// Output
-	fmt.Println(int(sq_sum - sum_sq))
+	println(int(sq_sum - sum_sq))
 }

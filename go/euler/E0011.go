@@ -10,10 +10,6 @@
 
 package main
 
-import (
-	"fmt"
-)
-
 func main() {
 
 	// Variables
@@ -65,5 +61,5 @@ func main() {
 	}
 
 	// Output
-	fmt.Println(max_prod)
+	println(max_prod)
 }

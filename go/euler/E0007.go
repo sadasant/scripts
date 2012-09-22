@@ -11,7 +11,6 @@
 package main
 
 import (
-	"fmt"
 	"flag"
 	"strconv"
 )
@@ -41,5 +40,5 @@ func main() {
 	}
 
 	// Output
-	fmt.Println(primes[n-1])
+	println(primes[n-1])
 }

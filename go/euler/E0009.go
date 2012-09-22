@@ -11,7 +11,6 @@
 package main
 
 import (
-	"fmt"
 	"flag"
 	"strconv"
 	M "math"
@@ -21,7 +20,7 @@ func main() {
 
 	// Input
 	flag.Parse()
-	n, _ := strconv.Atof64(flag.Arg(0))
+	n, _ := strconv.ParseFloat(flag.Arg(0), 64)
 	a, b, c, t := 0.0, 0.0, 0.0, false
 
 	// Process
@@ -37,6 +36,6 @@ L:	for c = 3.0; c < n; c++ {
 
 	// Output
 	if t {
-		fmt.Println(a,b,c,int(a*b*c))
+		println(a,b,c,int(a*b*c))
 	}
 }

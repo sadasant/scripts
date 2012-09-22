@@ -11,7 +11,6 @@
 package main
 
 import (
-	"fmt"
 	"flag"
 	"strconv"
 	M "math"
@@ -21,7 +20,7 @@ func main() {
 
 	// Input
 	flag.Parse()
-	n, _ := strconv.Atoi64(flag.Arg(0))
+	n, _ := strconv.ParseInt(flag.Arg(0), 10, 64)
 	sq := int64(M.Sqrt(float64(n)))
 
 	// Variables
@@ -42,5 +41,5 @@ func main() {
 	}
 
 	// Output
-	fmt.Println(s)
+	println(s)
 }
