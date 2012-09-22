@@ -11,24 +11,19 @@
 package main
 
 import (
-	"fmt"
 	"flag"
-	"strconv"
 	"math"
+	"strconv"
 )
 
 func main() {
-
-	// Input
 	flag.Parse()
-	n, _ := strconv.Atoi64(flag.Arg(0))
+	n, _ := strconv.ParseInt(flag.Arg(0), 10, 64)
 
-	// Variables
 	nmax := int64(math.Floor(math.Sqrt(float64(n)))) / 3
 	primes := make([]int64, nmax)
 	factor, i := int64(0), int64(2)
 
-	// Process
 	for ; i < nmax; i++ {
 		for j, v := range primes {
 			if v == 0 {
@@ -44,6 +39,5 @@ func main() {
 		}
 	}
 
-	// Output
-	fmt.Println(factor)
+	println(factor)
 }

@@ -1,5 +1,5 @@
 // Daniel R. (sadasant.com)
-// 01/02/2012
+// 21/09/2012
 //
 // Problem:
 // http://projecteuler.net/problem=2
@@ -11,28 +11,22 @@
 package main
 
 import (
-	"fmt"
 	"flag"
 	"strconv"
 )
 
 func main() {
-
-	// Input
 	flag.Parse()
 	n, _ := strconv.Atoi(flag.Arg(0))
 
-	// variables
-	var a, b, sum = 0, 1, 0
+	a, b, sum := 0, 1, 0
 
-	// Process
-	for sum < n {
+	for b < n {
 		b, a = a+b, b
 		if b%2 == 0 {
 			sum += b
 		}
 	}
 
-	// Output
-	fmt.Println(sum)
+	println(sum)
 }

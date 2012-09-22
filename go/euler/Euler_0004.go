@@ -11,35 +11,29 @@
 package main
 
 import (
-	"fmt"
 	"flag"
 	"strconv"
 	"math"
-	"utf8"
 )
 
 func reverse(s string) string {
-	o := make([]int, utf8.RuneCountInString(s))
-	i := len(o)
-	for _, c := range s {
-		i--
-		o[i] = c
+	runes := []rune(s)
+	i, j := 0, len(runes) - 1
+	for i < j {
+		runes[i], runes[j] = runes[j], runes[i]
+		i, j = i+1, j-1 
 	}
-	return string(o)
+	return string(runes)
 }
 
 func main() {
-
-	// Input
 	flag.Parse()
 	n, _ := strconv.Atoi(flag.Arg(0))
 
-	// Variables
 	max := int(math.Pow10(n))
 	min := max - int(math.Pow10(n-1))
 	r0, r1, largest_prod := 0, 0, 0
 
-	// Process
 	for i := max; i > min; i-- {
 		for j := max; j > min; j-- {
 			prod := i * j
@@ -52,6 +46,5 @@ func main() {
 		}
 	}
 
-	// Output
-	fmt.Println(r0, r1, largest_prod)
+	println(r0, r1, largest_prod)
 }

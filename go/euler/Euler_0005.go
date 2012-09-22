@@ -11,7 +11,6 @@
 package main
 
 import (
-	"fmt"
 	"flag"
 	"strconv"
 )
@@ -52,5 +51,5 @@ L:
 	}
 
 	// Output
-	fmt.Println(lcm)
+	println(lcm)
 }
