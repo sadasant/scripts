@@ -1,5 +1,5 @@
 // Daniel R. (sadasant.com)
-// 12/02/2012
+// 22/09/2012
 //
 // Problem:
 //   http://projecteuler.net/problem=9
