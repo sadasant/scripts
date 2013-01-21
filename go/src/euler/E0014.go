@@ -6,7 +6,6 @@ package main
 import "fmt"
 
 func main() {
-  fmt.Println("Hello, playground")
 	var longest, chain int
 	var longest_n int64
 	var n int64 = 1
@@ -16,7 +15,6 @@ func main() {
 			longest = chain
 			longest_n = n
 		}
-	        // fmt.Println(n, chain, longest)
 	}
 	fmt.Println(longest_n)
 	return
