@@ -8,6 +8,10 @@ package main
 // -   [fmt.Scanf](http://golang.org/pkg/fmt/#Scanf)
 // -   [time.Tick](http://golang.org/pkg/time/#example_Tick)
 // -   [strconv.Itoa](http://golang.org/pkg/strconv/#Itoa)
+//
+// It'd be cool to make it with ncurses:
+// -   [ncurses with go](https://code.google.com/p/goncurses/source/browse/ncurses.go)
+//
 
 import (
 	"fmt"
