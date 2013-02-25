@@ -14,10 +14,10 @@ package main
 //
 
 import (
+	"bufio"
+	"os"
 	"strconv"
 	"time"
-	"os"
-	"bufio"
 )
 
 func wait(start string, minutes int, end string) {
@@ -62,29 +62,34 @@ func main() {
 	task_count := 1
 	r := bufio.NewReader(os.Stdin)
 	for {
-		println("\n"+bwhite+"Pomodoro! "+white+"Nº", task_count, end)
+		println("\n"+bwhite+"Pomodoro! "+white+"#"+strconv.Itoa(task_count), end)
 		print("Name your task: ")
 		task_name, _ = r.ReadString(delim)
 		task_name = task_name[:len(task_name)-1]
-		wait(red+"Waiting ", 25, " minutes for “"+bred+task_name+red+"” :|"+end)
+		wait(red+"Waiting ", 25, " minutes for you to complete \""+bred+task_name+red+"\" :|"+end)
 		print("\x07") // ASCII code 7 (BEL), or "\a"
-		print("\r" + green + "Finished “" + bgreen + task_name + green + "” :)                 \n" + end)
-		switch task_count % 4 {
-		case 0:
-		ask_break:
-			print("Short (s) or long (l) break?")
-			which_break, _ = r.ReadString(delim)
-			which_break = which_break[:len(which_break)-1]
-			switch which_break {
-			case "s":
+		print("\r" + green + "You just finished \"" + bgreen + task_name + green + "\" :)                        \n" + end)
+	ask_break:
+		print("Short (s) or long (l) break?")
+		which_break, _ = r.ReadString(delim)
+		which_break = which_break[:len(which_break)-1]
+		switch which_break {
+		case "s":
+			switch task_count % 4 {
+			case 0:
 				break_time = 15
-			case "l":
+			default:
+				break_time = 3
+			}
+		case "l":
+			switch task_count % 4 {
+			case 0:
 				break_time = 30
 			default:
-				goto ask_break
+				break_time = 5
 			}
 		default:
-			break_time = 3
+			goto ask_break
 		}
 		wait(bblack+"Take a break of ", break_time, " minutes..."+end)
 		task_count++
