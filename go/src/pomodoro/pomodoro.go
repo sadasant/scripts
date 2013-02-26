@@ -68,7 +68,7 @@ func main() {
 		task_name = task_name[:len(task_name)-1]
 		wait(red+"Waiting ", 25, " minutes for you to complete \""+bred+task_name+red+"\" :|"+end)
 		print("\x07") // ASCII code 7 (BEL), or "\a"
-		print("\r" + green + "You just finished \"" + bgreen + task_name + green + "\" :)                        \n" + end)
+		print("\r" + green + "You just finished \"" + bgreen + task_name + green + "\" :) \033[K\n" + end)
 	ask_break:
 		print("Short (s) or long (l) break?")
 		which_break, _ = r.ReadString(delim)
