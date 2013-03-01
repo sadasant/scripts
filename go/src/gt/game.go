@@ -42,6 +42,15 @@ type Player struct {
 //
 // \precsim is preference.
 //
+// More Theory:
+// -   Completeness:
+//     All actions can be ranked in an order of preference (indifference between two or more is possible).
+//     -   [Partial Order](http://en.wikipedia.org/wiki/Partial_order#Formal_definition)
+//     -   [Complete Partial Order](https://en.wikipedia.org/wiki/Complete_partial_order)
+//     -   [Completeness](https://en.wikipedia.org/wiki/Completeness_%28order_theory%29)
+// -   Transivity: All actions can be compared with other actions.
+//     -   [Transitive relation](https://en.wikipedia.org/wiki/Transitive_relation)
+//
 // I'm using a mean as an utility function.
 // Means can be compared to the estimated outcome
 // of a strategy based on the other player strategies

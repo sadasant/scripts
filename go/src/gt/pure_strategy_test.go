@@ -33,7 +33,19 @@ func Test_Normal_Consistency(t *testing.T) {
 }
 
 
-
+// [Prisoner's dilemma](https://en.wikipedia.org/wiki/Prisoner%27s_dilemma)
+//
+// Canonical PD payoff matrix:
+//
+//                Cooperate   Defect
+//     Cooperate { { R, R }, { S, T } }
+//     Defect    { { S, T }, { P, P } }
+//
+// For it to be a prisoner's dilemma game in the strong sense, the following
+// condition must hold for the payoffs:
+//
+//     T > R > P > S
+//
 func Test_Prisoners_Dilema(t *testing.T) {
 	PD := NormalGame([][][2]int{
 		{{-1, -1}, {-5,  0}},
@@ -58,3 +70,10 @@ func Test_Coordination(t *testing.T) {
 	}
 	return
 }
+
+
+// Next: Battle of the Sexes's Two Pure Strategy Nash Equilibrium.
+//
+// [Wiki](https://en.wikipedia.org/wiki/Battle_of_the_sexes_%28game_theory%29)
+//
+
