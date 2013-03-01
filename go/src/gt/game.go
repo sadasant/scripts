@@ -89,6 +89,11 @@ func (p *Player) Utility(A []*int) int {
 //     the utility function.
 //     I wonder if this has implications.
 //
+// Todos:
+// -   The formula left clears that the output
+//     is at least a member of the function of BestResponses,
+//     so best responses must return a SET.
+//
 func (p *Player) BestResponse() (strategy int) {
 	var u, bestu int
 	for s := 0; s < len(p.Strategies); s++ {
@@ -107,6 +112,7 @@ func (p *Player) BestResponse() (strategy int) {
 // It could be useful to make it an interface
 // if in that way we could use general functions
 // over different games.
+//
 type Game interface {
 	NashEquilibrium() [2]int
 }
@@ -119,6 +125,7 @@ type Game interface {
 //     It's per player, so it's a function of each player!
 //     -   u = (u1, ..., un)
 //         is a profile of utility functions.
+//
 type Normal struct {
 	N [2]*Player
 	A [][][2]int // Action
@@ -131,6 +138,8 @@ type Normal struct {
 // Which means, a Nash Equilibrium
 // is the set of actions that matches
 // the best responses of every player.
+//
+// -   `a =` leaves clear that the output is an action [2]int
 //
 func (g *Normal) NashEquilibrium() [2]int {
 	br0 := g.N[0].BestResponse()
