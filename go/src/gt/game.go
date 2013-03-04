@@ -7,7 +7,6 @@ import (
 // References:
 // -   [Pointer Comparison in Go](http://golang.org/ref/spec#Comparison_operators)
 
-
 // Players, or Agents:
 // -   Self-Interested.
 //     -   They only care about themselves
@@ -22,11 +21,12 @@ type Player struct {
 	Payoff int
 	// ## [Strategy Concept](https://en.wikipedia.org/wiki/Strategy_%28game_theory%29)
 	// -   One of the options he can choose in a setting where the outcome depends
-	//     not only on his own actions but on the action of others.
+	//     not only on his own actions but on the actions of others.
 	// -   A player's strategy set defines what strategies are available for them
 	//     to play.
 	// -   A strategy picks the outcome based on the actions...
 	Strategies [][]*int
+	Enemy      *Player
 }
 
 // Definition of Utility Function:
@@ -51,19 +51,12 @@ type Player struct {
 // -   Transivity: All actions can be compared with other actions.
 //     -   [Transitive relation](https://en.wikipedia.org/wiki/Transitive_relation)
 //
-// I'm using a mean as an utility function.
-// Means can be compared to the estimated outcome
-// of a strategy based on the other player strategies
-// (which correspond to the elements in the set A).
-//
-func (p *Player) Utility(A []*int) int {
-	var m, l int
-	l = len(A)
-	for i := 0; i < l; i++ {
-		m += *A[i]
-	}
-	return m/l
-}
+// func (p *Player) Utility(X []*int) (R int) {
+// 	for i := 0; i < len(X); i++ {
+// 		R += *X[i]
+// 	}
+// 	return
+// }
 
 // Definition of Best Response:
 //
@@ -94,20 +87,22 @@ func (p *Player) Utility(A []*int) int {
 //     is at least a member of the function of BestResponses,
 //     so best responses must return a SET.
 //
-func (p *Player) BestResponse() (strategy int) {
-	var u, bestu int
-	for s := 0; s < len(p.Strategies); s++ {
-		u = p.Utility(p.Strategies[s])
-		// Rational Preference: ui(a*i) ≥ ui(ai)
-		if s == 0 || u > bestu {
-			bestu = u
-			strategy = s
+func (p *Player) BestResponse(a_i int) (a []int) {
+	var u, best_u int
+	for i := 0; i < len(p.Strategies); i++ {
+		u = *p.Strategies[i][a_i]
+		// Rrtional Preference: ui(a*i) ≥ ui(ai)
+		switch {
+		case i == 0 || u > best_u:
+			a = []int{i}
+			best_u = u
+		case u == best_u:
+			a = append(a, i)
+			best_u = u
 		}
 	}
 	return
 }
-
-
 
 // It could be useful to make it an interface
 // if in that way we could use general functions
@@ -118,17 +113,22 @@ type Game interface {
 }
 
 // Normal Form Games:
-// -   Players: N = {1, ..., n}
-// -   Actions: (a1, ..., an) ∈ A = A1 × ... × An
-//     is an action profile.
-// -   Utility function: ui : A → R
-//     It's per player, so it's a function of each player!
-//     -   u = (u1, ..., un)
-//         is a profile of utility functions.
 //
 type Normal struct {
-	N [2]*Player
-	A [][][2]int // Action
+	N [2]*Player // Players: N = {1, ..., n}
+	A [][][2]int // Actions: (a1, ..., an) ∈ A = A1 × ... × An
+}
+
+// Utility function: ui : A → R
+// It's per player, so it's a function of each player!
+// -   u = (u1, ..., un)
+//     is a profile of utility functions.
+//
+func (g *Normal) Utility(A [][2]int) (r [][2]int) {
+	for _, a := range A {
+		r = append(r, g.A[a[0]][a[1]])
+	}
+	return
 }
 
 // Definition of Nash Equilibrium:
@@ -139,12 +139,23 @@ type Normal struct {
 // is the set of actions that matches
 // the best responses of every player.
 //
-// -   `a =` leaves clear that the output is an action [2]int
+// -   `a =` leaves clear that the output is at least an action []int
 //
-func (g *Normal) NashEquilibrium() [2]int {
-	br0 := g.N[0].BestResponse()
-	br1 := g.N[1].BestResponse()
-	return g.A[br0][br1]
+func (g *Normal) NashEquilibrium() (a [][2]int) {
+	// Fixes:
+	// -   I think this can be made with recursion.
+	// -   Make this work for games with different shapes.
+	var br0, br1 []int
+	var _a [2]int
+	for i := 0; i < len(g.N[0].Strategies); i++ {
+		br0 = g.N[1].BestResponse(i)
+		br1 = g.N[0].BestResponse(br0[0]) // This should be changed to a loop
+		_a = [2]int{br0[0], br1[0]}
+		if i == 0 || _a != a[i-1] {
+			a = append(a, _a)
+		}
+	}
+	return
 }
 
 // Create a new game with n players
@@ -153,6 +164,8 @@ func (g *Normal) NashEquilibrium() [2]int {
 // ⊃ Set of outcomes per a1 × a2
 func NormalGame(a [][][2]int) (game Normal) {
 	game.N = [2]*Player{new(Player), new(Player)}
+	game.N[0].Enemy = game.N[1]
+	game.N[1].Enemy = game.N[0]
 
 	// Building the Sets of Strategies
 	var i, j, lena, lena0 int
@@ -175,8 +188,6 @@ func NormalGame(a [][][2]int) (game Normal) {
 	return
 }
 
-
-
 // Extensive Form Games:
 // -   Players move sequentially, represented as a tree.
 // -   Keeps track of what each player knows when he or she makes each decision.
@@ -191,5 +202,3 @@ type Move struct {
 	Left     *Move
 	Right    *Move
 }
-
-
