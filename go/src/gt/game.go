@@ -26,7 +26,6 @@ type Player struct {
 	//     to play.
 	// -   A strategy picks the outcome based on the actions...
 	Strategies [][]*int
-	Enemy      *Player
 }
 
 // Definition of Utility Function:
@@ -164,8 +163,6 @@ func (g *Normal) NashEquilibrium() (a [][2]int) {
 // ⊃ Set of outcomes per a1 × a2
 func NormalGame(a [][][2]int) (game Normal) {
 	game.N = [2]*Player{new(Player), new(Player)}
-	game.N[0].Enemy = game.N[1]
-	game.N[1].Enemy = game.N[0]
 
 	// Building the Sets of Strategies
 	var i, j, lena, lena0 int
