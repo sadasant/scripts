@@ -9,23 +9,24 @@ func Test_Normal_Consistency(t *testing.T) {
 		{{-1, -1}, {-5, 0}},
 		{{0, -5}, {-2, -2}},
 	})
-	for i := 0; i < len(PD.A); i++ {
-		for j := 0; j < len(PD.A[0]); j++ {
-			if PD.A[i][j][0] != *PD.N[0].Strategies[i][j] {
-				t.Errorf("Mismatched Strategies for P0: %v and %v", PD.A[i][j][0], *PD.N[0].Strategies[i][j])
+	// Checking the consistency of strategies
+	for i := 0; i < len(PD.Actions); i++ {
+		for j := 0; j < len(PD.Actions[0]); j++ {
+			if PD.Actions[i][j][0] != *PD.Players[0].Strategies[i][j] {
+				t.Errorf("Mismatched Strategies for P0: %v and %v", PD.Actions[i][j][0], *PD.Players[0].Strategies[i][j])
 			}
-			if PD.A[i][j][1] != *PD.N[1].Strategies[j][i] {
-				t.Errorf("Mismatched Strategies for P1: %v and %v", PD.A[i][j][1], *PD.N[1].Strategies[j][i])
+			if PD.Actions[i][j][1] != *PD.Players[1].Strategies[j][i] {
+				t.Errorf("Mismatched Strategies for P1: %v and %v", PD.Actions[i][j][1], *PD.Players[1].Strategies[j][i])
 			}
 		}
 	}
 	// Testing best response...
-	if PD.N[0].BestResponse(0)[0] != 1 {
+	if PD.Players[0].BestResponse(0)[0] != 1 {
 		t.Errorf("Wrong Best Response!")
 	}
 	// Testing players' pointers after changing the game...
-	PD.A[0][1][0] = 0
-	PD.A[1][0][1] = 0
+	PD.Actions[0][1][0] = 0
+	PD.Actions[1][0][1] = 0
 	if PD.NashEquilibrium()[0] != [2]int{1, 0} {
 		t.Errorf("Wrong Best Response after the original game changed!")
 	}
@@ -53,7 +54,7 @@ func Test_Prisoners_Dilema(t *testing.T) {
 	eq := game.NashEquilibrium()
 	eu := game.Utility(eq)
 	if eu[0] != [2]int{-2, -2} {
-		t.Errorf("Wrong Best Response! \n-   BR1: %v\n-   BR2: %v", game.N[0].BestResponse(0), game.N[1].BestResponse(0))
+		t.Errorf("Wrong Best Response! \n-   BR1: %v\n-   BR2: %v", game.Players[0].BestResponse(0), game.Players[1].BestResponse(0))
 		t.Errorf("Wrong Nash Equilibrium! \n-   Strategy: %v\n-   Utility: %v", eq, eu)
 	}
 	return
@@ -72,9 +73,9 @@ func Test_BoS(t *testing.T) {
 	eu := game.Utility(eq)
 	if eq[0] != [2]int{0, 0} && eq[1] != [2]int{1, 1} && eu[0] != [2]int{3, 2} {
 		t.Errorf("Wrong Nash Equilibrium! \n-   Strategy: %v\n-   Utility: %v\n", eq, eu)
-		t.Errorf("\nP0 BR: %v", game.N[0].BestResponse(0))
-		t.Errorf("\nP1 BR: %v", game.N[1].BestResponse(0))
-		// t.Errorf("\nP0 Ss: {{%v %v}{%v %v}}", *game.N[0].Strategies[0][0], *game.N[0].Strategies[0][1], *game.N[0].Strategies[1][0], *game.N[0].Strategies[1][1])
+		t.Errorf("\nP0 BR: %v", game.Players[0].BestResponse(0))
+		t.Errorf("\nP1 BR: %v", game.Players[1].BestResponse(0))
+		// t.Errorf("\nP0 Ss: {{%v %v}{%v %v}}", *game.Players[0].Strategies[0][0], *game.Players[0].Strategies[0][1], *game.Players[0].Strategies[1][0], *game.Players[0].Strategies[1][1])
 	}
 	return
 }

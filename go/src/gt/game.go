@@ -114,8 +114,8 @@ type Game interface {
 // Normal Form Games:
 //
 type Normal struct {
-	N [2]*Player // Players: N = {1, ..., n}
-	A [][][2]int // Actions: (a1, ..., an) ∈ A = A1 × ... × An
+	Players [2]*Player // Players: N = {1, ..., n}
+	Actions [][][2]int // Actions: (a1, ..., an) ∈ A = A1 × ... × An
 }
 
 // Utility function: ui : A → R
@@ -123,9 +123,9 @@ type Normal struct {
 // -   u = (u1, ..., un)
 //     is a profile of utility functions.
 //
-func (g *Normal) Utility(A [][2]int) (r [][2]int) {
-	for _, a := range A {
-		r = append(r, g.A[a[0]][a[1]])
+func (g *Normal) Utility(Action [][2]int) (r [][2]int) {
+	for _, a := range Action {
+		r = append(r, g.Actions[a[0]][a[1]])
 	}
 	return
 }
@@ -146,9 +146,9 @@ func (g *Normal) NashEquilibrium() (a [][2]int) {
 	// -   Make this work for games with different shapes.
 	var br0, br1 []int
 	var _a [2]int
-	for i := 0; i < len(g.N[0].Strategies); i++ {
-		br0 = g.N[1].BestResponse(i)
-		br1 = g.N[0].BestResponse(br0[0]) // This should be changed to a loop
+	for i := 0; i < len(g.Players[0].Strategies); i++ {
+		br0 = g.Players[1].BestResponse(i)
+		br1 = g.Players[0].BestResponse(br0[0]) // This should be changed to a loop
 		_a = [2]int{br0[0], br1[0]}
 		if i == 0 || _a != a[i-1] {
 			a = append(a, _a)
@@ -162,26 +162,26 @@ func (g *Normal) NashEquilibrium() (a [][2]int) {
 // ⊃ Set of all actions per player 2
 // ⊃ Set of outcomes per a1 × a2
 func NormalGame(a [][][2]int) (game Normal) {
-	game.N = [2]*Player{new(Player), new(Player)}
+	game.Players = [2]*Player{new(Player), new(Player)}
 
 	// Building the Sets of Strategies
 	var i, j, lena, lena0 int
 	lena = len(a)
 	lena0 = len(a[0])
-	game.N[0].Strategies = make([][]*int, lena)
-	game.N[1].Strategies = make([][]*int, lena0)
+	game.Players[0].Strategies = make([][]*int, lena)
+	game.Players[1].Strategies = make([][]*int, lena0)
 	for i = 0; i < lena; i++ {
-		game.N[0].Strategies[i] = make([]*int, lena0)
+		game.Players[0].Strategies[i] = make([]*int, lena0)
 		for j = 0; j < lena0; j++ {
 			if i == 0 {
-				game.N[1].Strategies[j] = make([]*int, lena)
+				game.Players[1].Strategies[j] = make([]*int, lena)
 			}
-			game.N[0].Strategies[i][j] = &a[i][j][0]
-			game.N[1].Strategies[j][i] = &a[i][j][1]
+			game.Players[0].Strategies[i][j] = &a[i][j][0]
+			game.Players[1].Strategies[j][i] = &a[i][j][1]
 		}
 	}
 
-	game.A = a
+	game.Actions = a
 	return
 }
 
