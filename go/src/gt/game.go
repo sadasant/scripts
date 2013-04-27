@@ -7,6 +7,9 @@ import (
 // References:
 // -   [Pointer Comparison in Go](http://golang.org/ref/spec#Comparison_operators)
 
+// Acts, quick way to define the longish Actions array.
+type Acts [][][2]int
+
 // Players, or Agents:
 // -   Self-Interested.
 //     -   They only care about themselves
@@ -109,13 +112,14 @@ func (p *Player) BestResponse(a_i int) (a []int) {
 //
 type Game interface {
 	NashEquilibrium() [2]int
+	ParetoDominates() [2]int
 }
 
 // Normal Form Games:
 //
 type Normal struct {
 	Players [2]*Player // Players: N = {1, ..., n}
-	Actions [][][2]int // Actions: (a1, ..., an) ∈ A = A1 × ... × An
+	Actions Acts       // Actions: (a1, ..., an) ∈ A = A1 × ... × An
 }
 
 // Utility function: ui : A → R
@@ -157,11 +161,50 @@ func (g *Normal) NashEquilibrium() (a [][2]int) {
 	return
 }
 
+// Definition of Pareto Dominates:
+//
+//    ∀i ≤ n [ui(a*) > ui(s')]
+//
+// Pareto efficiency is a state of economic allocation of resources in which it
+// is impossible to make any one further better off without making at least one
+// individual worse off.
+//
+func (g *Normal) ParetoDominates() (a [][2]int) {
+	var ai, aj [2]int
+	var add bool
+	var lasti, lastj int
+loop:
+	for i := 0; i < len(g.Actions); i++ {
+		for j := 0; j < len(g.Actions[i]); j++ {
+			aj = g.Actions[i][j]
+			if aj[0] >= ai[0] && aj[1] >= ai[1] {
+				ai = aj
+				switch add {
+				case true:
+					if i == lasti && j == lastj {
+						continue
+					}
+					a = append(a, ai)
+				case false:
+					lasti = i
+					lastj = j
+				}
+			}
+		}
+	}
+	if !add {
+		add = true
+		a = append(a, ai)
+		goto loop
+	}
+	return
+}
+
 // Create a new game with n players
 // Set of all actions per player 1
 // ⊃ Set of all actions per player 2
 // ⊃ Set of outcomes per a1 × a2
-func NormalGame(a [][][2]int) (game Normal) {
+func NormalGame(a Acts) (game Normal) {
 	game.Players = [2]*Player{new(Player), new(Player)}
 
 	// Building the Sets of Strategies

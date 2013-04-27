@@ -5,7 +5,7 @@ import (
 )
 
 func Test_Normal_Consistency(t *testing.T) {
-	PD := NormalGame([][][2]int{
+	PD := NormalGame(Acts{
 		{{-1, -1}, {-5, 0}},
 		{{0, -5}, {-2, -2}},
 	})
@@ -47,7 +47,7 @@ func Test_Normal_Consistency(t *testing.T) {
 //     T > R > P > S
 //
 func Test_Prisoners_Dilema(t *testing.T) {
-	game := NormalGame([][][2]int{
+	game := NormalGame(Acts{
 		{{-1, -1}, {-5, 0}},
 		{{0, -5}, {-2, -2}},
 	})
@@ -65,7 +65,7 @@ func Test_Prisoners_Dilema(t *testing.T) {
 // [Wiki](https://en.wikipedia.org/wiki/Battle_of_the_sexes_%28game_theory%29)
 //
 func Test_BoS(t *testing.T) {
-	game := NormalGame([][][2]int{
+	game := NormalGame(Acts{
 		{{3, 2}, {0, 0}},
 		{{0, 0}, {2, 3}},
 	})
@@ -78,4 +78,37 @@ func Test_BoS(t *testing.T) {
 		// t.Errorf("\nP0 Ss: {{%v %v}{%v %v}}", *game.Players[0].Strategies[0][0], *game.Players[0].Strategies[0][1], *game.Players[0].Strategies[1][0], *game.Players[0].Strategies[1][1])
 	}
 	return
+}
+
+// From: http://planetmath.org/examplesofnormalformgames
+func Test_Moar(t *testing.T) {
+	var n_test int
+	game := NormalGame(Acts{
+		{{5, 5}, {-5, 10}},
+		{{10, -5}, {0, 0}},
+	})
+	eq := game.NashEquilibrium()
+	eu := game.Utility(eq)
+	if !(eq[0] == [2]int{1, 1} && eu[0] == [2]int{0, 0}) {
+		t.Errorf("\nTest_Moar N%v: game.NashEquilibrium\nWanted: %v\nGot: %v", n_test, [2]int{1, 1}, eq[0])
+	}
+	pd := game.ParetoDominates()
+	if pd[0] != [2]int{5, 5} {
+		t.Errorf("\nTest_Moar N%v: game.ParetoDominates\nWanted: %v\nGot: %v", n_test, [2]int{1, 1}, pd[0])
+	}
+	n_test++
+	game = NormalGame(Acts{
+		{{5, 5}, {5, 5}},
+		{{10, -5}, {0, 0}},
+	})
+	eq = game.NashEquilibrium()
+	eu = game.Utility(eq)
+	if !(eq[0] == [2]int{0, 1} && eu[0] == [2]int{5, 5}) {
+		t.Errorf("\nTest_Moar N%v: game.NashEquilibrium\nWanted: %v\nGot: %v", n_test, [2]int{1, 1}, eq[0])
+	}
+	pd = game.ParetoDominates()
+	if pd[0] != [2]int{5, 5} && pd[1] != [2]int{5, 5} {
+		t.Errorf("\nTest_Moar N%v: game.ParetoDominates\nWanted: %v\nGot: %v", n_test, [2]int{1, 1}, pd[0])
+	}
+
 }
