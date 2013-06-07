@@ -75,14 +75,14 @@ h1, h2, h3 {
 	margin-top  : 30px;
 }
 h1 {
-	font-size   : 1.8em;
+	font-size : 1.8em;
 }
 h2 {
-	font-size   : 1.4em;
+	font-size : 1.4em;
 }
 h3 {
-	font-size   : 1em;
-	margin-top  : 20px;
+	font-size  : 1em;
+	margin-top : 20px;
 }
 p {
 	margin : 16px 0;
@@ -111,6 +111,7 @@ pre, p code {
 	padding               : 10px;
 	margin                : 10px 0;
 	overflow-x            : hidden;
+	white-space           : pre;
 	border                : 1px solid #171717;
 	border-top            : 1px solid #111111;
 	border-bottom         : 1px solid #222222;
@@ -119,10 +120,9 @@ pre, p code {
 	-webkit-border-radius : 3px;
 	box-shadow            : inset 10px 0 30px #0A0A0A;
 	                      , inset 30px 0 100px #070707;
-	white-space : pre;
 }
 pre code {
-	border : 0;
+	border     : 0;
 	box-shadow : 0;
 }
 pre:hover, p code:hover {
