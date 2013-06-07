@@ -1,0 +1,16 @@
+# Markdown Previewer
+
+Install it with:
+
+    go install github.com/sadasant/scripts/go/markdown_preview
+
+Then you can do this:
+
+    markdown_preview ~/my/markdown/file/path.mkd
+
+You'll need `PATH="$PATH:$HOME/code/go/bin"` in your bashrc.
+
+If you're editing a markdown file in vim, you can do this:
+
+    :!markdown_preview %:p
+
