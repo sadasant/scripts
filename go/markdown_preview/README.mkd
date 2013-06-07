@@ -1,5 +1,7 @@
 # Markdown Previewer
 
+>   **Note:** you'll need to install _surf_.
+
 Install it with:
 
     go install github.com/sadasant/scripts/go/markdown_preview
