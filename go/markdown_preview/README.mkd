@@ -1,6 +1,6 @@
 # Markdown Previewer
 
->   **Note:** you'll need to install _surf_.
+>   **Note:** you'll need to install [surf](http://surf.suckless.org/).
 
 Install it with:
 
