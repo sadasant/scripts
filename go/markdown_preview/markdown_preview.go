@@ -163,21 +163,20 @@ img {
 	server := &http.Server{
 		Addr: port,
 	}
-	server_listener, err := net.Listen("tcp", port)
+	listener, err := net.Listen("tcp", port)
 	if err != nil {
 		log.Fatal(err.Error())
 	}
-	go server.Serve(server_listener)
+	go server.Serve(listener)
 
 	// Surf the url
 	url := "http://localhost" + port
 	println("Listening on: " + url + "/")
 	cmd := exec.Command("surf", url)
-	err = cmd.Run()
-	if err != nil {
+	if err = cmd.Run(); err != nil {
 		log.Fatal(err.Error())
 	}
 
 	// Bye bye!
-	server_listener.Close()
+	listener.Close()
 }
