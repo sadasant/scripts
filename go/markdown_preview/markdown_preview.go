@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"github.com/knieriem/markdown"
 	"log"
+	"net"
 	"net/http"
 	"os"
 	"os/exec"
@@ -30,11 +31,9 @@ func main() {
 	p.Markdown(mkd_file, markdown.ToHTML(&markdown_buf))
 
 	// Launch the HTTP server
-	bye := make(chan bool)
-	go func() {
-		http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-			w.Write([]byte(`
-			<head><style>
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte(`
+		<head><style>
 a {
 	color              : #666;
 	outline            : 0;
@@ -154,24 +153,31 @@ img {
 	max-width : 77%;
 	border    : 1px solid #111;
 }
-			</style></head>
-			<body>`))
-			w.Write(markdown_buf.Bytes())
-			w.Write([]byte("</body>"))
-		})
-		http.ListenAndServe(port, nil)
-		bye <- true
-	}()
+		</style></head>
+		<body>`))
+		w.Write(markdown_buf.Bytes())
+		w.Write([]byte("</body>"))
+	})
+
+	// Serving the doc
+	server := &http.Server{
+		Addr: port,
+	}
+	server_listener, err := net.Listen("tcp", port)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+	go server.Serve(server_listener)
 
 	// Surf the url
 	url := "http://localhost" + port
 	println("Listening on: " + url + "/")
 	cmd := exec.Command("surf", url)
-	output, err := cmd.Output()
+	err = cmd.Run()
 	if err != nil {
 		log.Fatal(err.Error())
 	}
-	println(string(output))
 
-	<-bye
+	// Bye bye!
+	server_listener.Close()
 }
