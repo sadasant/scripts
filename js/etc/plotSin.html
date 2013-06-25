@@ -1,4 +1,20 @@
-<canvas id="mycanvas" width=500 height=200 ></canvas>
+<!--
+Replicating the examples of this post:
+
+<http://quantizedconfusion.tumblr.com/post/48122524425/the-fourier-series-approximation-for-the-step>
+
+Which says this:
+
+> The Fourier series approximation for the Step Function (or Square Wave) is
+`1/n * Sin(n*pi*x)/L` for odd values of n. Here is the expansion, plotted up to
+`n=49`. Below are the individual waves and above is the progression of their
+added values!
+
+Todo: Progression.
+
+-->
+
+<canvas id="mycanvas" width=500 height=300 ></canvas>
 
 <script>
 
@@ -36,10 +52,10 @@ function Canvas(id, opts) {
     function plot(init, end, f) {
         plotArray(genArray(init, end, f));
     }
-    function serie(init, end, f) {
-        for (var i = init; i < end; i++) {
+    function serie(range, f) {
+        for (var i = 0; i < range.length; i++) {
             plot(0, 400, function(x){
-                return f(i, x)
+                return f(range[i], x)
             })
         }
     }
@@ -51,14 +67,24 @@ function Canvas(id, opts) {
 }
 
 var options = {
-    origin    : { x: 0, y: 60 },
+    origin    : { x: 0, y: 120 },
     lineWidth : 1
 }
 
-var PI_100  = Math.PI/100;
+var PI_200  = Math.PI/200;
 function f(n, x) {
-    return (1/n) * Math.sin(n * PI_100 * x)/0.02;
+    return -(1/n) * Math.sin(n * PI_200 * x)/0.01;
 }
 
-Canvas("mycanvas", options).serie(0, 10, f);
+Canvas("mycanvas", options).serie(oddArray(1,49), f);
+
+function oddArray(init, end) {
+	var A = [];
+	for (var i = init; i < end; i++) {
+		if (i%2 !== 0) {
+			A[A.length] = i;
+		}
+	}
+	return A;
+}
 </script>
