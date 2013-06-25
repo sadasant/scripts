@@ -19,61 +19,61 @@ Todo: Progression.
 <script>
 
 function Canvas(id, opts) {
-    var canvas = document.getElementById(id);
-    if (!canvas.getContext) {
-        throw "!canvas.getContext of element #" + id;
-    }
-    var ctx = canvas.getContext("2d");
-    ctx.lineWidth = opts.lineWidth || 1;
-    function genArray(init, end, f) {
-        var x = opts.origin.x,
-            y = opts.origin.y + f(x),
-            A = [[x,y]];
-        for (var i = init + 1; i < end; i++) {
-            x += 1;
-            y = f(x) + opts.origin.y;
-            A.push([x,y]);
-        }
-        return A;
-    }
-    function plotArray(A) {
-        var x, y, x1, y1;
-        for (var i = 0; i < A.length - 1; i++) {
-            x = A[i][0];
-            y = A[i][1];
-            x1 = A[i+1][0];
-            y1 = A[i+1][1];
-            ctx.beginPath();
-            ctx.moveTo(x, y);
-            ctx.lineTo(x1, y1);
-            ctx.stroke();
-        }
-    }
-    function plot(init, end, f) {
-        plotArray(genArray(init, end, f));
-    }
-    function serie(range, f) {
-        for (var i = 0; i < range.length; i++) {
-            plot(0, 400, function(x){
-                return f(range[i], x)
-            })
-        }
-    }
-    return {
-        canvas : canvas,
-        plot   : plot,
-        serie  : serie,
-    }
+	var canvas = document.getElementById(id);
+	if (!canvas.getContext) {
+		throw "!canvas.getContext of element #" + id;
+	}
+	var ctx = canvas.getContext("2d");
+	ctx.lineWidth = opts.lineWidth || 1;
+	function genArray(init, end, f) {
+		var x = opts.origin.x,
+			y = opts.origin.y + f(x),
+			A = [[x,y]];
+		for (var i = init + 1; i < end; i++) {
+			x += 1;
+			y = f(x) + opts.origin.y;
+			A.push([x,y]);
+		}
+		return A;
+	}
+	function plotArray(A) {
+		var x, y, x1, y1;
+		for (var i = 0; i < A.length - 1; i++) {
+			x = A[i][0];
+			y = A[i][1];
+			x1 = A[i+1][0];
+			y1 = A[i+1][1];
+			ctx.beginPath();
+			ctx.moveTo(x, y);
+			ctx.lineTo(x1, y1);
+			ctx.stroke();
+		}
+	}
+	function plot(init, end, f) {
+		plotArray(genArray(init, end, f));
+	}
+	function serie(range, f) {
+		for (var i = 0; i < range.length; i++) {
+			plot(0, 400, function(x){
+				return f(range[i], x)
+			})
+		}
+	}
+	return {
+		canvas : canvas,
+		plot   : plot,
+		serie  : serie
+	}
 }
 
 var options = {
-    origin    : { x: 0, y: 120 },
-    lineWidth : 1
+	origin    : { x: 0, y: 120 },
+	lineWidth : 1
 }
 
 var PI_200  = Math.PI/200;
 function f(n, x) {
-    return -(1/n) * Math.sin(n * PI_200 * x)/0.01;
+	return -(1/n) * Math.sin(n * PI_200 * x)/0.01;
 }
 
 Canvas("mycanvas", options).serie(oddArray(1,49), f);
