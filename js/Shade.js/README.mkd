@@ -1,0 +1,122 @@
+# Shade
+
+A super lightweight javascript library for crazy people.
+
+>   Uglified weights ~2kb  
+>   Gziped weights ~1kb
+
+
+
+## How to Use it
+
+Include it in your website with:
+
+    <script type="text/javascript" src="http://sadasant.com/js/Shade.min.js"></script>
+
+Then, in another JavaScript, try coding something as follows:
+
+
+
+## Features
+
+Each of the followings are **Shade.js** functions.
+
+
+### eq(a, b, message, callback)
+
+Tests whether the values _a_ and _b_ are equal, callbacks with a
+boolean value and the given message.
+
+>   Works even comparing objects and functions!
+
+
+### neq(a, b, message, callback)
+
+Tests whether the values _a_ and _b_ are different, callbacks with a
+boolean value and the given message.
+
+>   Works even comparing objects and functions!
+
+
+### typeOf(object)
+
+Checks the type of a given object, works with any type, even custom
+types.
+
+
+### db
+
+The **Shade.db** object is a **localStorage** wrapper that allows you to
+easily set, get and eliminate values. It's methods are:
+
+-   **Shade.db.set(key, val)**
+-   **Shade.db.get(key, val)**
+-   **Shade.db.drop(key)**
+
+
+### find(str, node)
+
+Finds html elements inside the given _node_ that matches with the given
+_str_. The _node_ is the _document_ if the argument is not passed. It's
+not a direct use of `document.querySelector` because not every browser
+is compatible with it.
+
+
+### hasClass(node, className)
+
+Checks if the html element _node_ has the class _className_.
+
+    Cross browser compatible!
+
+
+### addClass(node, className)
+
+Adds the class _className_ to the html element _node_.
+
+    Cross browser compatible!
+
+
+### removeClass(node, className)
+
+Removes the class _className_ to the html element _node_.
+
+    Cross browser compatible!
+
+
+### addEvent(node, type, callback)
+
+Removes the desired _type_ event to the html element _node_, when that
+event is triggered, _callback_ is executed.
+
+    Cross browser compatible!
+
+
+### http(method, url, headers, data, callback)
+
+Easy **AJAX** handler.
+Parameters _headers_, _data_ and _callback_ are optional.  _Headers_ and
+_data_ should be object literals. _Data_ can be a string like:
+`a=1&b=2`. You can use [any](http://zombo.com/) HTTP Method.
+
+
+
+## How to compile it
+
+Make sure you have [UglifyJS](https://github.com/mishoo/UglifyJS),
+then run this on your shell:
+
+    uglifyjs Shade.js -mt > Shade.min.js
+
+
+
+## How to test it
+
+Run the `test-server` with **node**:
+
+    node test-server.js
+
+And go to <http://localhost:8080/>
+
+
+
+## [License](http://sadasant.com/license)

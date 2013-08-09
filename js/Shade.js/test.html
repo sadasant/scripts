@@ -1,0 +1,114 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<style type="text/css">
+		body   { font-family  : sans-serif               }
+		h2     { font-size    : 20px ; margin-top : 70px }
+		li     { list-style   : bullet                   }
+		b      { margin-right : 10px                     }
+		code   { background   : #ccc                     }
+		.log   { display      : block                    }
+		.red   { color        : red                      }
+		.green { color        : green                    }
+	</style>
+	<script type="text/javascript" src="Shade.js"></script>
+</head>
+<body>
+
+	<h1 id="title">Testing Shade.js</h1>
+	<ul class="results"></ul>
+
+	<script type="text/javascript">
+		(function(Shade) {
+
+			var $results = Shade.find(".results"),
+				$item = document.createElement("li"),
+				$clone // clone
+
+			Shade.addClass($item, "log")
+
+			function output(eq, message) {
+				if (Shade.typeOf(eq) === "String") {
+					$clone = $results.cloneNode(1)
+					$clone.innerHTML = "<h2>" + eq + "</h2>"
+					$results.parentNode.appendChild($clone)
+					$results = $clone
+					return
+				} else if (eq) {
+					$clone = $item.cloneNode(1)
+					Shade.addClass($clone, "green")
+					$clone.innerHTML = "<b>OK:</b>"
+				} else {
+					$clone = $item.cloneNode(1)
+					Shade.addClass($clone, "red")
+					$clone.innerHTML = "<b>NOT OK:</b>"
+				}
+				$clone.innerHTML += message
+				$results.appendChild($clone)
+			}
+
+			output("Shade.eq() and Shade.neq()")
+			Shade.eq(function(){} , function(){} , "<code>function(){}</code> equals to <code>function(){}</code>"   , output)
+			Shade.neq(1           , "1"          , "<code>function(){}</code> distinct to <code>function(){}</code>" , output)
+
+			output("Shade.typeOf()")
+			Shade.eq(Shade.typeOf(0)         , "Number"        , "typeOf <code>0</code> is <code>Number</code>"                                         , output)
+			Shade.eq(Shade.typeOf(0.0)       , "Number"        , "typeOf <code>0.0</code> is <code>Number</code>"                                       , output)
+			Shade.eq(Shade.typeOf("test")    , "String"        , "typeOf <code>\"test\"</code> is <code>\"String\"</code>"                              , output)
+			Shade.eq(Shade.typeOf([])        , "Array"         , "typeOf <code>[]</code> is <code>\"Array\"</code>"                                     , output)
+			Shade.eq(Shade.typeOf({})        , "Object"        , "typeOf <code>{}</code> is <code>\"Object\"</code>"                                    , output)
+			Shade.eq(Shade.typeOf($item)     , "HTMLLIElement" , "typeOf <code>document.createElement(\"li\")</code> is <code>\"HTMLLIElement\"</code>" , output)
+			Shade.eq(Shade.typeOf(document)  , "HTMLDocument"  , "typeOf <code>document</code> is <code>\"HTMLDocument\"</code>"                        , output)
+			Shade.eq(Shade.typeOf(undefined) , "undefined"     , "typeOf <code>undefined</code> is <code>\"undefined\"</code>"                          , output)
+			Shade.eq(Shade.typeOf(null)      , "null"          , "typeOf <code>null</code> is <code>\"null\"</code>"                                    , output)
+
+
+			output("Shade.db()")
+			Shade.eq(Shade.db.get("wtf") , undefined               , "Get unstored value: <code>\"wtf\" → undefined</code>"    , output)
+			Shade.eq(Shade.db.get("key") , window.localStorage.key , "Get localStorage function: <code>\"key\" → key()</code>" , output)
+			Shade.db.set("one", 1)
+			Shade.eq(Shade.db.get("one") , 1 , "Get stored number value: <code>\"one\" → 1</code>" , output)
+			Shade.db.set("object", { "key" : "value" })
+			Shade.eq(Shade.db.get("object") , { "key" : "value" } , "Get stored object value: <code>\"object\" → { \"key\" : \"value\"}</code>" , output)
+			Shade.db.drop("object")
+			Shade.eq(Shade.db.get("object") , undefined, "Get droped object value: <code>\"object\" → undefined</code>" , output)
+
+			output("Shade.find()")
+			Shade.eq(Shade.find("document")           , undefined                                       , "Couldn't find the document (document is not a node)"                                                                    , output)
+			Shade.eq(Shade.find("body")               , document.body                                   , "Found the body"                                                                                                         , output)
+			Shade.eq(Shade.find("h2").length          , document.getElementsByTagName("h2").length      , "Found all the h2 elements"                                                                                              , output)
+			Shade.eq(Shade.find(".green")[3]          , document.getElementsByClassName("green")[3]     , "Found the third element class .green"                                                                                   , output)
+			Shade.eq(Shade.find("#title")             , document.getElementById("title")                , "Found the element id title"                                                                                             , output)
+			Shade.eq(Shade.find(".results li").length , document.querySelectorAll(".results li").length , "Found all the <code>li</code> elements created before this"                                                             , output)
+			Shade.eq(Shade.find(".results ul")        , undefined                                       , "Got <code>undefined</code> after trying to find <code>ul</code> elements inside all the <code>.results</code> elements" , output)
+			Shade.eq(Shade.find("body h1")            , document.getElementsByTagName("h1")[0]          , "Found the unique <code>h1</code> element inside the <code>body</code>"                                                  , output)
+
+			output("Shade.addClass()")
+			var h24 = Shade.find("h2")[4]
+			Shade.addClass(h24, "green")
+			Shade.eq(Shade.hasClass(h24 , "green") , true , "Added green class to an element and checked with Shade.hasClass" , output)
+			Shade.removeClass(h24, "green")
+			Shade.eq(Shade.hasClass(h24 , "green") , false, "Removed green class to an element and checked with Shade.hasClass" , output)
+
+			output("Shade.addEvent()")
+			Shade.addEvent(h24, "click", function(){
+				Shade.addClass(h24, "green")
+			})
+			h24.click()
+			Shade.eq(Shade.hasClass(h24 , "green") , true , "Added a click event to an element triggered it" , output)
+			Shade.removeClass(h24, "green")
+
+			output("Shade.http()")
+			Shade.http("get", "get-test", function(ok, data){
+				Shade.eq(data , "get test ok", "HTTP get test", output)
+			})
+			Shade.http("post", "post-test", { test : true }, function(ok, data){
+				Shade.eq(data , "post test ok", "HTTP post test", output)
+			})
+
+		})(window.Shade)
+	</script>
+</body>
+</html>

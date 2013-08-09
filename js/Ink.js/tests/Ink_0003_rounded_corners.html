@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset=utf-8 />
+    <title>Ink.js</title>
+    <!--[if IE]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <style>
+      article, aside, figure, footer, header, hgroup,
+      menu, nav, section { display: block; }
+    </style>
+    <script src="../lib/Ink.js"></script>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+  </body>
+  <script>
+    // By Daniel R. (sadasant.com)
+    window.onload = function() {
+
+      // Starting Ink.js
+      Ink.init({ clear : 'rgba(255,255,255,1)' })
+
+      // Creating a Rectangle object
+      var R = new Ink.Rect({
+        x : 50
+      , y : 50
+      , width : 50
+      , height : 50
+      , border_color : '#d0d0d0'
+      , border_radius : 5
+      , fill : Ink.grad({
+          type : 'LINEAR'
+        , x1 : 0
+        , x2 : 0
+        , y1 : 25
+        , y2 : -25
+        })
+      })
+
+      var R2 = new Ink.Rect({
+        x : 125
+      , y : 50
+      , width : 50
+      , height : 50
+      , border_color : '#d0d0d0'
+      , fill : Ink.grad({
+          type : 'LINEAR'
+        , x1 : 0
+        , x2 : 0
+        , y1 : 25
+        , y2 : -25
+        })
+      })
+
+      // Drawing the rectangle
+      // Adding the colors to the gradient fill
+      R.fill.colors([[0,'#D0D0D0'], [.1,'#F0F0F0'], [.9,'#FFF'], [1,'#DDD']])
+      R2.fill.colors([[0,'#D0D0D0'], [.1,'#F0F0F0'], [.9,'#FFF'], [1,'#DDD']])
+
+      // Drawing the rectangle
+      Ink.draw(R, R2)
+
+      // Let's rotate both rectangles!
+      // Instead of using a function per rectangle,
+      // we can use just one of them.
+      R.afterDraw = function() {
+        this.rotation += .01
+        R2.rotation += .01
+      }
+
+    }
+  </script>
+</html>

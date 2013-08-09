@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset=utf-8 />
+    <title>Ink.js</title>
+    <!--[if IE]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <style>
+      article, aside, figure, footer, header, hgroup,
+      menu, nav, section { display: block; }
+    </style>
+    <script src="../lib/Ink.js"></script>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+  </body>
+  <script>
+    // By Daniel R. (sadasant.com)
+    window.onload = function() {
+
+      // Starting Ink.js
+      Ink.init({ clear: 'rgba(0,0,0,1)' })
+
+      // Creating a Rectangle object
+      // function grad(type, x1, y1, r1, x2, y2, r2) {
+      var grad = {
+            type : 'RADIAL'
+          , x1 : 30
+          , x2 : 42
+          , y1 : 30
+          , y2 : 40
+          , r1 : 10
+          , r2 : 30
+          }
+        , colors = [[0,'#999'], [.5,'#333'], [.9,'#FFE'], [1,"#000"]]
+        , R = new Ink.Rect({
+          x : 25
+        , y : 20
+        , width  : 70
+        , height : 70
+        , fill   : Ink.grad(grad)
+        })
+
+      // Adding the colors to the gradient fill
+      R.fill.colors(colors)
+
+      // Drawing the rectangle
+      Ink.draw(R)
+
+      // After drawing each frame...
+      R.afterDraw = function() {
+        var pos = this.y / 190
+          , x = this._x
+          , y = this._y
+        grad.x1 = x + 20
+        grad.x2 = x + 32
+        grad.y1 = y + 20
+        grad.y2 = y + 30
+        grad.r1 = pos
+        grad.r2 = 30
+        colors[0][0] = pos > 0.5 ? pos - 0.5 : 0
+        colors[1][0] = pos
+        colors[2][0] = .9 - pos / 100
+        // Replacing the custom fill to a new gradient
+        this.fill = Ink.grad(grad).colors(colors)
+        // Stop on certain position
+        if (this.y > 150) this.stop()
+      }
+      // De accelerate the Rectangle
+      R.accel(-1)
+    }
+  </script>
+</html>
