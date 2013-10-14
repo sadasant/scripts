@@ -2,3 +2,4 @@ lib/*
 !lib/.git-ref
 js-build/*
 !js-build/.git-ref
+node_modules

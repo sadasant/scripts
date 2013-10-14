@@ -5,8 +5,8 @@ require.config({
         text: "../lib/text"
     },
     shim: {
-        gradients: {
-            deps: ["../lib/jstat"]
+        main: {
+            deps: []
         }
     }
 });

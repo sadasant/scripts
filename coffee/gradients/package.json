@@ -1,0 +1,6 @@
+{
+    "name": "CoffeeScript_Gradients",
+    "dependencies" : {
+        "connect": "2.9.0"
+    }
+}
