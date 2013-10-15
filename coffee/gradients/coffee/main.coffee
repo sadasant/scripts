@@ -1,12 +1,19 @@
 define [
-    'eye'
-    'text!../data/ex1data1.txt'
-], (eye, data)->
-    console.log(eye(5).toString())
+    'load'
+    'sum'
+], (load, sum)->
 
-    data = (data.split '\n').map (e)->
-        e = e.split ','
-        x = parseFloat e[0]
-        y = parseFloat e[1]
-        [x, y]
+    # Identity Matrix
+    console.log Matrix.I(5).inspect()
 
+    data = load '../data/ex1data1.txt'
+    X = data.map (e)-> [1, e[0]]
+    Y = data.map (e)-> e[1]
+    m = Y.length
+    h = Matrix.Zero 2, 1
+    J = 1/(2*m)
+    J *= sum X, Y, (x, y)->
+        Math.pow h.x($M x) - y, 2
+
+    # Cost is: 31.745461082787738
+    console.log 'Cost is:', J
