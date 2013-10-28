@@ -1,0 +1,5 @@
+﻿# upChanges
+
+A script to upload only files that change within a directory.
+
+_Under development..._
