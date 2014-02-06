@@ -1,19 +1,6 @@
-// Daniel R. (sadasant.com)
-// 22/09/2012
-//
-// Problem:
-//   http://projecteuler.net/problem=5
-//
-// How to run:
-//   go run E0005.go 20
-//
-
 package main
 
-import (
-	"flag"
-	"strconv"
-)
+import . "fmt"
 
 // Euclidean Algorithm
 func gcd(a int, b int) int {
@@ -26,30 +13,25 @@ func gcd(a int, b int) int {
 }
 
 func main() {
+	var n int
 
-	// Input
-	flag.Parse()
-	max, _ := strconv.Atoi(flag.Arg(0))
+	Print("The smallest positive number evenly divisible by all numbers from 1 to ")
+	Scan(&n)
 
-	// Variables
-	mults := make([]int, max)
+	mults := make([]int, n)
 	lcm := 1
 
-	// process:
-	// gcd only for primes, but from last to first (?)
-L:
-	for i := max; i > 0; i-- {
+	for i := n; i > 0; i-- {
 		for j, v := range mults {
 			if v == 0 {
 				mults[j] = i
 				lcm = (lcm * i) / gcd(lcm, i)
 				break
 			} else if v%i == 0 {
-				break L
+				Println("is", lcm)
+				return
 			}
 		}
 	}
 
-	// Output
-	println(lcm)
 }
