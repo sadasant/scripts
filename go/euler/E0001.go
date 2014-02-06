@@ -1,31 +1,19 @@
-// Daniel R. (sadasant.com)
-// 21/09/2012
-//
-// Problem:
-//   http://projecteuler.net/problem=1
-//
-// How to run:
-//   go run E0001.go 1000
-//
-
 package main
 
-import (
-	"flag"
-	"strconv"
-)
+import . "fmt"
 
 func main() {
 
-	flag.Parse()
-	n, _ := strconv.Atoi(flag.Arg(0))
+	var n, i, s int
 
-	var sum int
-	for i := 0; i < n; i++ {
-		if i%3 == 0 || i%5 == 0 {
-			sum += i
+	Println("Sum all the multiples of 3 or 5 below:")
+	Scan(&n)
+
+	for ; i < n; i++ {
+		if i%3*i%5 == 0 {
+			s += i
 		}
 	}
 
-	println(sum)
+	Println(s)
 }
