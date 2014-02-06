@@ -1,50 +1,39 @@
-// Daniel R. (sadasant.com)
-// 22/09/2012
-//
-// Problem:
-//   http://projecteuler.net/problem=4
-//
-// How to run:
-//   go run E0004.go 3
-//
-
 package main
 
 import (
-	"flag"
-	"math"
+	. "fmt"
+	. "math"
 	"strconv"
 )
 
 func reverse(s string) string {
-	runes := []rune(s)
-	i, j := 0, len(runes)-1
-	for i < j {
-		runes[i], runes[j] = runes[j], runes[i]
-		i, j = i+1, j-1
+	l := len(s)
+	r := make([]rune, l)
+	for _, v := range s {
+		l--
+		r[l] = v
 	}
-	return string(runes)
+	return string(r[l:])
 }
 
 func main() {
-	flag.Parse()
-	n, _ := strconv.Atoi(flag.Arg(0))
+	var n int
+	var p string
 
-	max := int(math.Pow10(n))
-	min := max - int(math.Pow10(n-1))
-	r0, r1, largest_prod := 0, 0, 0
+	Println("Largest palindrome made from the product of two numbers of length:")
+	Scan(&n)
 
-	for i := max; i > min; i-- {
+	max := int(Pow10(n) - 1)
+	min := 9 * max / 10
+
+	for i := max; ; i-- {
 		for j := max; j > min; j-- {
-			prod := i * j
-			str_prod := strconv.Itoa(i * j)
-			if str_prod == reverse(str_prod) && prod > largest_prod {
-				r0 = i
-				r1 = j
-				largest_prod = prod
+			p = strconv.Itoa(i * j)
+			if p == reverse(p) {
+				Printf("%v x %v = %s", i, j, p)
+				return
 			}
 		}
 	}
 
-	println(r0, r1, largest_prod)
 }
