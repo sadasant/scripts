@@ -1,43 +1,27 @@
-// Daniel R. (sadasant.com)
-// 22/09/2012
-//
-// Problem:
-//   http://projecteuler.net/problem=3
-//
-// How to run:
-//   go run E0003.go 600851475143
-//
-
 package main
 
 import (
-	"flag"
-	"math"
-	"strconv"
+	. "fmt"
+	. "math"
 )
 
 func main() {
-	flag.Parse()
-	n, _ := strconv.ParseInt(flag.Arg(0), 10, 64)
+	var n,m,l int64
 
-	nmax := int64(math.Floor(math.Sqrt(float64(n)))) / 3
-	primes := make([]int64, nmax)
-	factor, i := int64(0), int64(2)
+	Println("Largest prime factor of:")
+	Scan(&n)
 
-	for ; i < nmax; i++ {
-		for j, v := range primes {
-			if v == 0 {
-				primes[j] = i
-				if n%i == 0 {
-					factor = i
-				}
-				break
-			}
-			if i%v == 0 {
-				break
-			}
+	m = 3
+
+	for int64(Sqrt(float64(m))) < n {
+		if n%m == 0 {
+			n = n/m
+			l = m
+			m += 2
+		} else {
+			m += 2
 		}
 	}
 
-	println(factor)
+	println(l)
 }
