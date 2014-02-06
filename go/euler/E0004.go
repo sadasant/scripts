@@ -20,7 +20,7 @@ func main() {
 	var n int
 	var p string
 
-	Println("Largest palindrome made from the product of two numbers of length:")
+	Print("The largest palindrome made from the product of two numbers of length ")
 	Scan(&n)
 
 	max := int(Pow10(n) - 1)
@@ -30,7 +30,7 @@ func main() {
 		for j := max; j > min; j-- {
 			p = strconv.Itoa(i * j)
 			if p == reverse(p) {
-				Printf("%v x %v = %s", i, j, p)
+				Printf("is %v x %v = %s", i, j, p)
 				return
 			}
 		}

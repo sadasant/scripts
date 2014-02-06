@@ -8,7 +8,7 @@ import (
 func main() {
 	var n, m, l int64
 
-	Println("Largest prime factor of:")
+	Print("The largest prime factor of the number ")
 	Scan(&n)
 
 	m = 3
@@ -23,5 +23,5 @@ func main() {
 		}
 	}
 
-	println(l)
+	Println("is", l)
 }

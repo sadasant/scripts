@@ -6,7 +6,7 @@ func main() {
 
 	n, a, b, s := 0, 0, 1, 0
 
-	Println("Sum the Fibonacci sequence's even terms lower than:")
+	Print("The sum of the Fibonacci sequence's even termns lower than ")
 	Scan(&n)
 
 	for b < n {
@@ -16,5 +16,5 @@ func main() {
 		}
 	}
 
-	Println(s)
+	Println("is", s)
 }
