@@ -1,37 +1,21 @@
-// Daniel R. (sadasant.com)
-// 22/09/2012
-//
-// Problem:
-//   http://projecteuler.net/problem=6
-//
-// How to run:
-//   go run E0006.go 100
-//
-
 package main
 
 import (
-	"flag"
-	"strconv"
-	"math"
+	. "fmt"
+	. "math"
 )
 
 func main() {
+	var n, sum_sq, sq_sum float64
 
-	// Input
-	flag.Parse()
-	n, _ := strconv.ParseFloat(flag.Arg(0), 64)
+	Print("The difference between the sum of the squares and the square of the sum of the natural numbers up to ")
+	Scan(&n)
 
-	// Variables
-	sum_sq, sq_sum := 0.0, 0.0
-
-	// Process
-	for i := 1.0; i <= n; i += 1 {
-		sum_sq += math.Pow(i, 2.0)
+	for i := 1.0; i <= n; i++ {
+		sum_sq += Pow(i, 2.0)
 		sq_sum += i
 	}
-	sq_sum = math.Pow(sq_sum, 2.0)
+	sq_sum = Pow(sq_sum, 2.0)
 
-	// Output
-	println(int(sq_sum - sum_sq))
+	Println("is", int(sq_sum - sum_sq))
 }
