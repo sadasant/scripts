@@ -1,32 +1,18 @@
-// Daniel R. (sadasant.com)
-// 22/09/2012
-//
-// Problem:
-//   http://projecteuler.net/problem=7
-//
-// How to run:
-//   go run E0007.go 10001
-//
-
 package main
 
-import (
-	"flag"
-	"strconv"
-)
+import . "fmt"
 
 func main() {
+	var n int
 
-	// Input
-	flag.Parse()
-	n, _ := strconv.Atoi(flag.Arg(0))
+	Print("What is the prime number ")
+	Scan(&n)
 
-	// Variables
-	primes := make([]int64, n)
-	var i int64 = 2
+	primes := make([]int, n)
 
-	// Process
-	for l := 0; l < n; i++ {
+	copy(primes, []int{2,3,5})
+
+	for l, i := 3, 7; l < n; i+=2 {
 		for j, v := range primes {
 			if v == 0 {
 				primes[j] = i
@@ -39,6 +25,5 @@ func main() {
 		}
 	}
 
-	// Output
-	println(primes[n-1])
+	Println("is", primes[n-1])
 }
