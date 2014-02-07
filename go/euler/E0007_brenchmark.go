@@ -75,29 +75,20 @@ func Overview(n int) int {
 	return c-2
 }
 
+func benchmark(n int) {
+	ta := time.Now()
+	a := E0007(n)
+	tb := time.Now()
+	b := Overview(n)
+	tc := time.Now()
+	c := Boolean(n)
+	t3 := time.Now()
+	println("E0007   ", tb.Sub(ta), a)
+	println("Overview", tc.Sub(tb), b)
+	println("Boolean ", t3.Sub(tc), c)
+}
+
 func main() {
-	var ta,tb,tc,t3 time.Time
-	var n, a, b, c int
-	n = 6
-	ta = time.Now()
-	a = E0007(n)
-	tb = time.Now()
-	b = Overview(n)
-	tc = time.Now()
-	c = Boolean(n)
-	t3 = time.Now()
-	println("E0007   ", tb.Sub(ta), a)
-	println("Overview", tc.Sub(tb), b)
-	println("Boolean ", t3.Sub(tc), c)
-	n = 10001
-	ta = time.Now()
-	a = E0007(n)
-	tb = time.Now()
-	b = Overview(n)
-	tc = time.Now()
-	c = Boolean(n)
-	t3 = time.Now()
-	println("E0007   ", tb.Sub(ta), a)
-	println("Overview", tc.Sub(tb), b)
-	println("Boolean ", t3.Sub(tc), c)
+	benchmark(6)
+	benchmark(10001)
 }
