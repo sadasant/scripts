@@ -1,9 +1,9 @@
 package main
 
 import (
-	. "fmt"
-	. "math"
+	"github.com/sadasant/scripts/go/euler/euler"
 	"strconv"
+	"math"
 )
 
 func reverse(s string) string {
@@ -16,24 +16,21 @@ func reverse(s string) string {
 	return string(r[l:])
 }
 
-func main() {
-	var n int
-	var p string
-
-	Print("The largest palindrome made from the product of two numbers of length ")
-	Scan(&n)
-
-	max := int(Pow10(n) - 1)
+func solution(v ...int) (interface{}) {
+	max := int(math.Pow10(v[0]) - 1)
 	min := 9 * max / 10
-
 	for i := max; ; i-- {
 		for j := max; j > min; j-- {
-			p = strconv.Itoa(i * j)
+			p := strconv.Itoa(i * j)
 			if p == reverse(p) {
-				Printf("is %v x %v = %s", i, j, p)
-				return
+				return p
 			}
 		}
 	}
+}
 
+func main() {
+	euler.Init(4, "Find the largest palindrome made from the product of two N-digit numbers.")
+	euler.PrintTime("N = 2 | Result: %v, Nanoseconds: %d\n", solution, 2)
+	euler.PrintTime("N = 3 | Result: %v, Nanoseconds: %d\n", solution, 3)
 }

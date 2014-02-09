@@ -12,7 +12,7 @@ func gcd(a int, b int) int {
 	return a
 }
 
-func lcm(v ...int) int {
+func lcm(v ...int) interface{} {
 	lcm := 1
 	for _, v := range v {
 		lcm = (lcm * v) / gcd(lcm, v)

@@ -1,20 +1,19 @@
 package main
 
-import . "fmt"
+import "github.com/sadasant/scripts/go/euler/euler"
 
-func main() {
-
-	n, a, b, s := 0, 0, 1, 0
-
-	Print("The sum of the Fibonacci sequence's even termns lower than ")
-	Scan(&n)
-
-	for b < n {
+func solution(v ...int) interface{} {
+	a, b, s := 0, 1, 0
+	for b < v[0] {
 		b, a = a+b, b
 		if b%2 == 0 {
 			s += b
 		}
 	}
+	return s
+}
 
-	Println("is", s)
+func main() {
+	euler.Init(2, "By considering the terms in the Fibonacci sequence whose values do not exceed four million, find the sum of the even-valued terms.")
+	euler.PrintTime("Result: %v, Nanoseconds: %d\n", solution, 4e6)
 }

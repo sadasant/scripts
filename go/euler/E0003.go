@@ -1,27 +1,24 @@
 package main
 
 import (
-	. "fmt"
-	. "math"
+	"github.com/sadasant/scripts/go/euler/euler"
+	"math"
 )
 
-func main() {
+func solution(v ...int) interface{} {
 	var n, m, l int64
-
-	Print("The largest prime factor of the number ")
-	Scan(&n)
-
+	n = int64(v[0])
 	m = 3
-
-	for int64(Sqrt(float64(m))) < n {
+	for int64(math.Sqrt(float64(m))) < n {
 		if n%m == 0 {
-			n = n / m
-			l = m
-			m += 2
-		} else {
-			m += 2
+			n, l = n/m, m
 		}
+		m += 2
 	}
+	return l
+}
 
-	Println("is", l)
+func main() {
+	euler.Init(3, "What is the largest prime factor of the number 600851475143 ?")
+	euler.PrintTime("Result: %v, Nanoseconds: %d\n", solution, 600851475143)
 }
