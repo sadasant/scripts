@@ -1,45 +1,24 @@
-// Daniel R. (sadasant.com)
-// 22/09/2012
-//
-// Problem:
-//   http://projecteuler.net/problem=10
-//
-// How to run:
-//   go run E0010.go 2000000
-//
-
 package main
 
-import (
-	"flag"
-	"strconv"
-	M "math"
-)
+import "github.com/sadasant/scripts/go/euler/euler"
 
-func main() {
-
-	// Input
-	flag.Parse()
-	n, _ := strconv.ParseInt(flag.Arg(0), 10, 64)
-	sq := int64(M.Sqrt(float64(n)))
-
-	// Variables
+func solution(v ...int) interface{} {
+	n := v[0]
 	P := make([]bool, n)
-	s := int64(0)
-
-	// Process
-	for i := int64(2); i < n; i++ {
+	s := 2
+	for i := 3; i < n; i += 2 {
 		if !P[i] {
-			P[i] = true
 			s += i
-			if i < sq {
-				for j := i+i; j < n; j+=i {
-					P[j] = true
-				}
+			for j := i; j < n; j += i {
+				P[j] = true
 			}
 		}
 	}
+	return s
+}
 
-	// Output
-	println(s)
+func main() {
+	euler.Init(10, "Find the sum of all the primes below N.")
+	euler.PrintTime("N = 10  | Result: %v, Nanoseconds: %d\n", solution, 10)
+	euler.PrintTime("N = 2e6 | Result: %v, Nanoseconds: %d\n", solution, 2e6)
 }
