@@ -2,8 +2,8 @@ package main
 
 import (
 	"github.com/sadasant/scripts/go/euler/euler"
-	"strconv"
 	"math"
+	"strconv"
 )
 
 func reverse(s string) string {
@@ -16,7 +16,7 @@ func reverse(s string) string {
 	return string(r[l:])
 }
 
-func solution(v ...int) (interface{}) {
+func solution(v ...int) interface{} {
 	max := int(math.Pow10(v[0]) - 1)
 	min := 9 * max / 10
 	for i := max; ; i-- {
