@@ -1,19 +1,17 @@
 package main
 
-import . "fmt"
+import "github.com/sadasant/scripts/go/euler/euler"
 
-func main() {
-
-	var n, i, s int
-
-	Print("The sum all the multiples of 3 or 5 below ")
-	Scan(&n)
-
-	for ; i < n; i++ {
+func solution(v ...int) (s int) {
+	for i := 0; i < v[0]; i++ {
 		if i%3*i%5 == 0 {
 			s += i
 		}
 	}
+	return
+}
 
-	Println("is", s)
+func main() {
+	euler.Init(1, "Find the sum of all the multiples of 3 or 5 below 1000.")
+	euler.PrintTime("Result: %v, Nanoseconds: %d\n", solution, 1000)
 }
