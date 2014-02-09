@@ -13,25 +13,14 @@ func gcd(a int, b int) int {
 }
 
 func main() {
-	var n int
+	n, lcm := 0, 1
 
 	Print("The smallest positive number evenly divisible by all numbers from 1 to ")
 	Scan(&n)
 
-	mults := make([]int, n)
-	lcm := 1
-
 	for i := n; i > 0; i-- {
-		for j, v := range mults {
-			if v == 0 {
-				mults[j] = i
-				lcm = (lcm * i) / gcd(lcm, i)
-				break
-			} else if v%i == 0 {
-				Println("is", lcm)
-				return
-			}
-		}
+		lcm = (lcm * i) / gcd(lcm, i)
 	}
 
+	Println("is", lcm)
 }
