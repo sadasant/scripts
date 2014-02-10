@@ -1,6 +1,7 @@
 package euler
 
 // Sieve of Erastosthenes
+// Ignoring even numbers.
 func PrimesUpTo(n int) []int {
 	bools := make([]bool, n)
 	primes := make([]int, n)
