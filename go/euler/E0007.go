@@ -23,7 +23,7 @@ L:
 	return primes[n-2]
 }
 
-func Boolean(v ...int) interface{} {
+func Sieve(v ...int) interface{} {
 	n := v[0]
 	if n < 3 {
 		return n + 1
@@ -42,6 +42,10 @@ func Boolean(v ...int) interface{} {
 		}
 	}
 	return 0
+}
+
+func PackagedSieve(v ...int) interface{} {
+	return euler.PrimesUpTo(3+v[0]*int(math.Sqrt(float64(v[0]))))[v[0]-1]
 }
 
 func Overview(v ...int) interface{} {
@@ -81,9 +85,11 @@ func Overview(v ...int) interface{} {
 func main() {
 	euler.Init(7, "What is the Nst prime number?")
 	euler.PrintTime("N = 6     | Appending primes.       Result: %v,\t\tNanoseconds: %d\n", AppendingPrimes, 6)
-	euler.PrintTime("N = 6     | With boolean array.     Result: %v,\t\tNanoseconds: %d\n", Boolean, 6)
+	euler.PrintTime("N = 6     | Sieve of Eratosthenes.  Result: %v,\t\tNanoseconds: %d\n", Sieve, 6)
+	euler.PrintTime("N = 6     | With Packaged Sieve.    Result: %v,\t\tNanoseconds: %d\n", PackagedSieve, 6)
 	euler.PrintTime("N = 6     | With the overview code. Result: %v,\t\tNanoseconds: %d\n", Overview, 6)
 	euler.PrintTime("N = 10001 | Appending primes.       Result: %v,\tNanoseconds: %d\n", AppendingPrimes, 10001)
-	euler.PrintTime("N = 10001 | With boolean array.     Result: %v,\tNanoseconds: %d\n", Boolean, 10001)
+	euler.PrintTime("N = 10001 | Sieve of Eratosthenes.  Result: %v,\tNanoseconds: %d\n", Sieve, 10001)
+	euler.PrintTime("N = 10001 | With Packaged Sieve.    Result: %v,\tNanoseconds: %d\n", PackagedSieve, 10001)
 	euler.PrintTime("N = 10001 | With the overview code. Result: %v,\tNanoseconds: %d\n", Overview, 10001)
 }

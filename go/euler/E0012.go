@@ -1,64 +1,28 @@
-// Daniel R. (sadasant.com)
-// 22/09/2012
-//
-// Problem:
-//   http://projecteuler.net/problem=12
-//
-// How to run:
-//   go run E0012.go 500
-//
-
 package main
 
-import (
-	"flag"
-	"strconv"
-)
+import "github.com/sadasant/scripts/go/euler/euler"
 
-// Sieve of Erastosthenes
-func primesTo(n int64) []int64 {
-	bools := make([]bool, n+1)
-	primes := make([]int64, n+1)
-	primes[0] = 1
-	c := 1
-	for i := int64(2); i <= n; i++ {
-		if !bools[i] {
-			bools[i] = true
-			primes[c] = i
-			c++
-			for j := i + i; j <= n; j += i {
-				bools[j] = true
-			}
-		}
-	}
-	return primes[:c]
-}
+func solution(v ...int) interface{} {
+	top := v[0]
+	primes := euler.PrimesUpTo(top)
 
-func main() {
-	// Input
-	flag.Parse()
-	max, _ := strconv.ParseInt(flag.Arg(0), 10, 64)
+	var a, t, tt, exp, facts int
+	a, t = 1, 1
 
-	primes := primesTo(max)
-	lenprimes := len(primes)
-
-	var a, t, tt, exp, facts int64
-	a, t, tt, exp = 1, 1, 0, 0
-
-	for facts < max {
+	for facts < top {
 		facts = 1
-		a = a + 1
-		t = t + a // triangle
+		a += 1
+		t += a
 		tt = t
-		for i := 1; i < lenprimes; i++ {
-			if primes[i]*primes[i] > tt {
+		for _, v := range primes {
+			if v*v > tt {
 				facts *= 2
 				break
 			}
 			exp = 1
-			for tt%primes[i] == 0 {
+			for tt%v == 0 {
 				exp++
-				tt = tt / primes[i]
+				tt = tt / v
 			}
 			if exp > 1 {
 				facts *= exp
@@ -68,5 +32,11 @@ func main() {
 			}
 		}
 	}
-	print(t)
+	return t
+}
+
+func main() {
+	euler.Init(12, "What is the value of the first triangle number to have over N divisors?")
+	euler.PrintTime("N = 5   | Result: %v, Nanoseconds: %d\n", solution, 5)
+	euler.PrintTime("N = 500 | Result: %v, Nanoseconds: %d\n", solution, 500)
 }
