@@ -5,13 +5,13 @@ import (
 	"math"
 )
 
-func solution(v ...int) interface{} {
-	var n, m, l int64
-	n = int64(v[0])
+func solution(n int) interface{} {
+	var m, l int64
+	n64 := int64(n)
 	m = 3
-	for int64(math.Sqrt(float64(m))) < n {
-		if n%m == 0 {
-			n, l = n/m, m
+	for int64(math.Sqrt(float64(m))) < n64 {
+		if n64%m == 0 {
+			n64, l = n64/m, m
 		}
 		m += 2
 	}

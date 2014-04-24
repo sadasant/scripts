@@ -25,7 +25,7 @@ var grid [20][20]int = [20][20]int{
 	{1, 70, 54, 71, 83, 51, 54, 69, 16, 92, 33, 48, 61, 43, 52, 1, 89, 19, 67, 48},
 }
 
-func solution(v ...int) interface{} {
+func solution() interface{} {
 	max := 0
 	for i := 0; i < 20; i++ {
 		for j := 0; j < 20; j++ {
@@ -54,5 +54,5 @@ func solution(v ...int) interface{} {
 
 func main() {
 	euler.Init(11, "What is the greatest product of four adjacent numbers in the same direction (up, down, left, right, or diagonally) in the 20×20 grid?")
-	euler.PrintTime("Result: %v, Nanoseconds: %d\n", solution, 0)
+	euler.PrintTime("Result: %v, Nanoseconds: %d\n", solution)
 }

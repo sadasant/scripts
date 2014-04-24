@@ -2,9 +2,9 @@ package main
 
 import "github.com/sadasant/scripts/go/euler/euler"
 
-func solution(v ...int) interface{} {
+func solution(n int) interface{} {
 	var s int
-	for i := 0; i < v[0]; i++ {
+	for i := 0; i < n; i++ {
 		if i%3*i%5 == 0 {
 			s += i
 		}

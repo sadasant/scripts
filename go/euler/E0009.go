@@ -5,17 +5,17 @@ import (
 	"math"
 )
 
-func solution(v ...int) interface{} {
+func solution(n int) interface{} {
 	var a, b, c float64
-	n := float64(v[0])
-	for c = 3.0; c < n; c++ {
+	n64 := float64(n)
+	for c = 3.0; c < n64; c++ {
 		for b = c - 1; b > 1; b-- {
 			for a = b - 1; a > 1; a-- {
-				if a+b+c != n {
+				if a+b+c != n64 {
 					continue
 				}
 				if math.Pow(a, 2.0)+math.Pow(b, 2.0) == math.Pow(c, 2.0) {
-					return a * b * c
+					return int(a * b * c)
 				}
 			}
 		}

@@ -27,7 +27,7 @@ var n1000 []byte = []byte("" +
 	"05886116467109405077541002256983155200055935729725" +
 	"71636269561882670428252483600823257530420752963450")
 
-func solution(v ...int) interface{} {
+func solution() interface{} {
 	g, c := 0, 1
 	for i, v := range n1000 {
 		if i > 0 && (i+1)%5 == 0 {
@@ -44,5 +44,5 @@ func solution(v ...int) interface{} {
 
 func main() {
 	euler.Init(8, "Find the greatest product of five consecutive digits in the 1000-digit number.")
-	euler.PrintTime("Result: %v, Nanoseconds: %d\n", solution, 0)
+	euler.PrintTime("Result: %v, Nanoseconds: %d\n", solution)
 }

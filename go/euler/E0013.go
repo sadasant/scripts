@@ -104,7 +104,7 @@ var numbers [100]float64 = [100]float64 {
 	20849603.980134001723930671666823555245252804609722,
 	53503534.226472524250874054075591789781264330331690}
 
-func solution(v ...int) interface{} {
+func solution() interface{} {
 	var sum float64
 	for i := 0; i < 100; i++ {
 		sum += numbers[i]
@@ -114,5 +114,5 @@ func solution(v ...int) interface{} {
 
 func main() {
 	euler.Init(13, "Work out the first ten digits of the sum of the following one-hundred 50-digit numbers.")
-	euler.PrintTime("Result: %v, Nanoseconds: %d\n", solution, 0)
+	euler.PrintTime("Result: %v, Nanoseconds: %d\n", solution)
 }

@@ -17,9 +17,9 @@ func Collatz(n int) int {
 	}
 }
 
-func solution(v ...int) interface{} {
+func solution(N int) interface{} {
 	var longest, longest_n, chain int
-	for n := 1; n < v[0]; n++ {
+	for n := 1; n < N; n++ {
 		chain = Collatz(n)
 		if chain > longest {
 			longest = chain
@@ -34,5 +34,5 @@ func main() {
 		"  n -> n/2 (n is even)\n"+
 		"  n -> 3n + 1 (n is odd)\n\n"+
 		"Which starting number, under one million, produces the longest chain?")
-	euler.PrintTime("Result: %v, Nanoseconds: %d\n", solution, 1e6)
+	euler.PrintTime("Result: %v, Nanoseconds: %d\n", solution, int(1e6))
 }

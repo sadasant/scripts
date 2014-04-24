@@ -3,6 +3,7 @@ package euler
 import (
 	"fmt"
 	"time"
+	"reflect"
 )
 
 const (
@@ -29,19 +30,24 @@ func Init(n int, text string) {
 	fmt.Printf("%vProject Euler, problem %v%v%v\n%s%v\n", b_yellow, n, normal, yellow, text, normal)
 }
 
-func Time(f func(v ...interface{}) interface{}, v ...interface{}) (interface{}, time.Duration) {
+func Time(f interface{}, v ...interface{}) (interface{}, time.Duration) {
+	vf := reflect.ValueOf(f)
+	var vv = make([]reflect.Value, len(v))
+	for i, iv := range v {
+		vv[i] = reflect.ValueOf(iv)
+	}
 	ta := time.Now()
-	r := f(v...)
+	r := vf.Call(vv)[0].Interface()
 	tb := time.Now()
 	return r, tb.Sub(ta)
 }
 
-func PrintTime(msg string, f func(v ...interface{}) interface{}, v ...interface{}) {
+func PrintTime(msg string, f interface{}, v ...interface{}) {
 	r, t := Time(f, v...)
 	fmt.Printf(msg, r, t)
 }
 
-func Sequence(v ...int) []int {
+func Sequence(v ...int) []interface{} {
 	var start, steps, end int
 	start = v[0]
 	switch {
@@ -54,7 +60,7 @@ func Sequence(v ...int) []int {
 		steps = v[1]
 		break
 	}
-	r := make([]int, end+1-start)
+	r := make([]interface{}, end+1-start)
 	for i := start; i <= end; i += steps {
 		r[i-start] = i
 	}

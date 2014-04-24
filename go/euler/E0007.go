@@ -5,8 +5,7 @@ import (
 	"math"
 )
 
-func AppendingPrimes(v ...int) interface{} {
-	n := v[0]
+func AppendingPrimes(n int) interface{} {
 	primes := []int{3,5,7,11,13}
 	c := len(primes)
 	i := primes[c-1]+2
@@ -23,8 +22,7 @@ L:
 	return primes[n-2]
 }
 
-func Sieve(v ...int) interface{} {
-	n := v[0]
+func Sieve(n int) interface{} {
 	if n < 3 {
 		return n + 1
 	}
@@ -44,11 +42,11 @@ func Sieve(v ...int) interface{} {
 	return 0
 }
 
-func PackagedSieve(v ...int) interface{} {
-	return euler.PrimesUpTo(3+v[0]*int(math.Sqrt(float64(v[0]))))[v[0]-1]
+func PackagedSieve(n int) interface{} {
+	return euler.PrimesUpTo(3+n*int(math.Sqrt(float64(n))))[n-1]
 }
 
-func Overview(v ...int) interface{} {
+func Overview(n int) interface{} {
 	isPrime := func(n int) bool {
 		switch {
 		case n==1:
@@ -73,7 +71,7 @@ func Overview(v ...int) interface{} {
 		return true
 	}
 	c := 3
-	for count := 1; count < v[0]; c += 2 {
+	for count := 1; count < n; c += 2 {
 		if isPrime(c) {
 			count++
 		}

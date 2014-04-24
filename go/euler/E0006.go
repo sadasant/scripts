@@ -5,14 +5,14 @@ import (
 	"math"
 )
 
-func solution(v ...int) interface{} {
-	var n, sum_sq, sq_sum float64
-	n = float64(v[0])
-	for i := 1.0; i <= n; i++ {
+func solution(n int) interface{} {
+	var sum_sq, sq_sum float64
+	n64 := float64(n)
+	for i := 1.0; i <= n64; i++ {
 		sum_sq += math.Pow(i, 2.0)
 		sq_sum += i
 	}
-	return math.Pow(sq_sum, 2.0) - sum_sq
+	return int(math.Pow(sq_sum, 2.0) - sum_sq)
 }
 
 func main() {

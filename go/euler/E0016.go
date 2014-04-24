@@ -6,8 +6,7 @@ import (
 	"strconv"
 )
 
-func solution(v ...interface{}) interface{} {
-	n := v[0].(float64)
+func solution(n float64) interface{} {
 	ns := strconv.FormatFloat(n, 'f', 12, 64)
 	s := 0
 	for _, v := range ns {

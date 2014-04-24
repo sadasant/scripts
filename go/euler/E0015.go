@@ -6,11 +6,11 @@ import (
 	"math"
 )
 
-func solution(v ...int) interface{} {
-	n := float64(v[0])
+func solution(n int) interface{} {
+	n64 := float64(n)
 	var i, r float64 = 1, 1
-	for ; i <= n; i++ {
-		r *= (n+i)/i
+	for ; i <= n64; i++ {
+		r *= (n64+i)/i
 	}
 	return int(math.Ceil(r))
 }
