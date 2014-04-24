@@ -29,14 +29,14 @@ func Init(n int, text string) {
 	fmt.Printf("%vProject Euler, problem %v%v%v\n%s%v\n", b_yellow, n, normal, yellow, text, normal)
 }
 
-func Time(f func(v ...int) interface{}, v ...int) (interface{}, time.Duration) {
+func Time(f func(v ...interface{}) interface{}, v ...interface{}) (interface{}, time.Duration) {
 	ta := time.Now()
 	r := f(v...)
 	tb := time.Now()
 	return r, tb.Sub(ta)
 }
 
-func PrintTime(msg string, f func(v ...int) interface{}, v ...int) {
+func PrintTime(msg string, f func(v ...interface{}) interface{}, v ...interface{}) {
 	r, t := Time(f, v...)
 	fmt.Printf(msg, r, t)
 }
