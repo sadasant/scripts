@@ -34,7 +34,7 @@ const (
 )
 
 func Init(n int, text string) {
-	fmt.Printf("%vProject Euler, problem %v%v%v\n%s%v\n", b_yellow, n, normal, yellow, text, normal)
+	fmt.Printf("%sProject Euler, problem %s%s%s\n%s%s\n", b_yellow, n, normal, yellow, text, normal)
 }
 
 func Time(f interface{}, v ...interface{}) (interface{}, time.Duration) {
