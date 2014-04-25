@@ -4,7 +4,14 @@ import (
 	"fmt"
 	"time"
 	"reflect"
+	"flag"
 )
+
+var verbose = flag.Bool("v", false, "Show euler.Prints")
+
+func init() {
+	flag.Parse()
+}
 
 const (
 	b_black   = "\x1b[30;1m"
@@ -65,4 +72,22 @@ func Sequence(v ...int) []interface{} {
 		r[i-start] = i
 	}
 	return r
+}
+
+func Print(v ...interface{}) {
+	if *verbose {
+		fmt.Print(v...)
+	}
+}
+
+func Println(v ...interface{}) {
+	if *verbose {
+		fmt.Println(v...)
+	}
+}
+
+func Printf(s string, v ...interface{}) {
+	if *verbose {
+		fmt.Printf(s, v...)
+	}
 }
