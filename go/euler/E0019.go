@@ -66,7 +66,7 @@ func solution3(n_years int) int {
 
 func main() {
 	euler.Init(19, "How many Sundays fell on the first of the month during the twentieth century (1 Jan 1901 to 31 Dec 2000)?")
-	euler.PrintTime("Result: %v, Nanoseconds: %d\n", solution, 1901, 2000)
-	euler.PrintTime("Result: %v, Nanoseconds: %d\n", solution2, euler.Sequence(1901, 2000)...)
-	euler.PrintTime("Result: %v, Nanoseconds: %d\n", solution3, 100)
+	euler.PrintTime("Full specs   | Result: %v, Nanoseconds: %d\n", solution, 1901, 2000)
+	euler.PrintTime("Smaller code | Result: %v, Nanoseconds: %d\n", solution2, euler.Sequence(1901, 2000)...)
+	euler.PrintTime("Math         | Result: %v, Nanoseconds: %d\n", solution3, 100)
 }
