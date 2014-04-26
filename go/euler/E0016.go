@@ -10,8 +10,7 @@ func solution(n float64) int {
 	ns := strconv.FormatFloat(n, 'f', 12, 64)
 	s := 0
 	for _, v := range ns {
-		i := int(v - '0')
-		if i > 0 {
+		if i := int(v - '0'); i > 0 {
 			s += i
 		}
 	}
