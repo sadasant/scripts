@@ -104,7 +104,7 @@ var numbers [100]float64 = [100]float64 {
 	20849603.980134001723930671666823555245252804609722,
 	53503534.226472524250874054075591789781264330331690}
 
-func solution() interface{} {
+func solution() int {
 	var sum float64
 	for i := 0; i < 100; i++ {
 		sum += numbers[i]

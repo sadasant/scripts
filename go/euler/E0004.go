@@ -16,7 +16,7 @@ func reverse(s string) string {
 	return string(r[l:])
 }
 
-func solution(n int) interface{} {
+func solution(n int) string {
 	max := int(math.Pow10(n) - 1)
 	min := 9 * max / 10
 	for i := max; ; i-- {

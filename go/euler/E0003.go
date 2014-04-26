@@ -5,7 +5,7 @@ import (
 	"math"
 )
 
-func solution(n int) interface{} {
+func solution(n int) int64 {
 	var m, l int64
 	n64 := int64(n)
 	m = 3

@@ -2,7 +2,7 @@ package main
 
 import "github.com/sadasant/scripts/go/euler/euler"
 
-func solution(n int) interface{} {
+func solution(n int) int {
 	P := make([]bool, n)
 	s := 2
 	for i := 3; i < n; i += 2 {
@@ -16,7 +16,7 @@ func solution(n int) interface{} {
 	return s
 }
 
-func solution2(n int) interface{} {
+func solution2(n int) int {
 	var sum int
 	for _, v := range euler.PrimesUpTo(n) {
 		sum += v

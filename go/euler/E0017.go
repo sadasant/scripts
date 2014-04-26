@@ -17,7 +17,7 @@ var tens [9]string = [9]string{
 	"ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety",
 }
 
-func solution(N ...int) interface{} {
+func solution(N ...int) int {
 	s := 0
 	for _, n := range N {
 		ns := strconv.Itoa(n)

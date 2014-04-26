@@ -17,7 +17,7 @@ func Collatz(n int) int {
 	}
 }
 
-func solution(N int) interface{} {
+func solution(N int) int {
 	var longest, longest_n, chain int
 	for n := 1; n < N; n++ {
 		chain = Collatz(n)

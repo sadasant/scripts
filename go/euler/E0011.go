@@ -25,7 +25,7 @@ var grid [20][20]int = [20][20]int{
 	{1, 70, 54, 71, 83, 51, 54, 69, 16, 92, 33, 48, 61, 43, 52, 1, 89, 19, 67, 48},
 }
 
-func solution() interface{} {
+func solution() int {
 	max := 0
 	for i := 0; i < 20; i++ {
 		for j := 0; j < 20; j++ {

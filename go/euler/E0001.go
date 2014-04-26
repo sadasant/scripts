@@ -2,7 +2,7 @@ package main
 
 import "github.com/sadasant/scripts/go/euler/euler"
 
-func solution(n int) interface{} {
+func solution(n int) int {
 	var s int
 	for i := 0; i < n; i++ {
 		if i%3*i%5 == 0 {

@@ -6,7 +6,7 @@ import (
 	"math"
 )
 
-func solution(n int) interface{} {
+func solution(n int) int {
 	n64 := float64(n)
 	var i, r float64 = 1, 1
 	for ; i <= n64; i++ {

@@ -5,7 +5,7 @@ import (
 	"math"
 )
 
-func solution(n int) interface{} {
+func solution(n int) int {
 	var a, b, c float64
 	n64 := float64(n)
 	for c = 3.0; c < n64; c++ {
@@ -20,7 +20,7 @@ func solution(n int) interface{} {
 			}
 		}
 	}
-	return nil
+	return 0
 }
 
 func main() {

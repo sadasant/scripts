@@ -6,7 +6,7 @@ var months_limit = []int {
 	31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31,
 }
 
-func solution(min_year, max_year int) interface{} {
+func solution(min_year, max_year int) int {
 	var week_day  = 2;
 	var month_day = 1;
 	var month = 0;

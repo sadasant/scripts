@@ -2,7 +2,7 @@ package main
 
 import "github.com/sadasant/scripts/go/euler/euler"
 
-func solution(top int) interface{} {
+func solution(top int) int {
 	primes := euler.PrimesUpTo(top)
 
 	var a, t, tt, exp, facts int

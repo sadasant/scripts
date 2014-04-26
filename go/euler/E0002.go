@@ -2,7 +2,7 @@ package main
 
 import "github.com/sadasant/scripts/go/euler/euler"
 
-func solution(n int) interface{} {
+func solution(n int) int {
 	a, b, s := 0, 1, 0
 	for b < n {
 		b, a = a+b, b

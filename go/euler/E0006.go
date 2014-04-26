@@ -5,7 +5,7 @@ import (
 	"math"
 )
 
-func solution(n int) interface{} {
+func solution(n int) int {
 	var sum_sq, sq_sum float64
 	n64 := float64(n)
 	for i := 1.0; i <= n64; i++ {
