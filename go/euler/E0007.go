@@ -78,7 +78,6 @@ func Overview(n int) int {
 	}
 	return c-2
 }
- 
 
 func main() {
 	euler.Init(7, "What is the Nst prime number?")
