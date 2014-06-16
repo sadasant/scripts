@@ -1,38 +1,40 @@
-// by Daniel R. http://sadasant.com/
+var a = [1, 6, 2, 4, 9, 0, 5, 3, 7, 8];
 
-function mergeSort(M) {
-  var l = M.length;
-  if (l <= 1) return M;
-  var a = [],
-      b = [],
-      h = Math.round(l/2),
-      i;
-  for (i = 0; i < h; i++)
-      a[a.length] = M[i];
-  for (i = h; i < l; i++)
-      b[b.length] = M[i];
-  a = mergeSort(a);
-  b = mergeSort(b);
-  return merge(a, b);
+console.log("Unsorted Array", a);
+console.log("Sorted Array", mergeSort(a));
+ 
+function mergeSort(A) {
+    var l = A.length;
+    if (l <= 1) return A;
+    var a = [];
+    var b = [];
+    var half = Math.round(l/2);
+    var i;
+    for (i = 0; i < half; i++) {
+        a.push(A[i]);
+    }
+    for (i = half; i < l; i++) {
+        b.push(A[i]);
+    }
+    return merge(mergeSort(a), mergeSort(b));
 }
 
 function merge(a, b) {
-  var i = 0, j = 0,
-      l = a.length + b.length,
-      r = [];
-  while (r.length !== l) {
-    var _a = a[i],
-        _b = b[j];
-    if (!_b && _a || _a <= _b) {
-      r[r.length] = _a;
-      i++;
-    } else
-    if (!_a && _b || _b <= _a) {
-      r[r.length] = _b;
-      j++;
+    var i = 0;
+    var j = 0;
+    var l = a.length + b.length;
+    var r = [];
+    while (r.length !== l) {
+        var ai = a[i];
+        var bj = b[j];
+        if ((bj !== 0 && !bj && ai) || ai <= bj) {
+            r.push(ai);
+            i++;
+        } else
+        if ((ai !== 0 && !ai && bj) || bj <= ai) {
+            r.push(bj);
+            j++;
+        }
     }
-  }
-  return r;
+    return r;
 }
-
-console.log(mergeSort([1,0.5,6,8,123,3,4,2]));
