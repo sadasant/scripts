@@ -1,7 +1,7 @@
 var a = [1, 6, 2, 4, 9, 0, 5, 3, 7, 8];
 
 console.log("Unsorted Array", a);
-console.log("Sorted Array", mergeSort(a));
+console.log("Sorted Array  ", mergeSort(a));
  
 function mergeSort(A) {
     var l = A.length;
