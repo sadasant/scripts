@@ -1,0 +1,62 @@
+﻿# TREES
+
+-   [Binary Trees](https://en.wikipedia.org/wiki/Binary_tree)
+    -   At most two children.
+    -   **Balanced Bianry Tree**
+        -    The depth of the left and right subtrees of every node
+             differ by 1 or less.
+    -   [Self-Balanced Bianry Tree](https://en.wikipedia.org/wiki/Self-balancing_binary_search_tree)
+        -   Automatically small height after arbitrary
+            insertion/deletions.
+        -   [Red-black Tree](https://en.wikipedia.org/wiki/Red-black_tree)
+            -   Rules:
+                -   A node is black or red.
+                -   The root is black.
+                -   All leaves (nil) are black.
+                -   Every red node must have two black childs.
+                -   Every path from a node to any descendant leave
+                    should have the same number of black nodes.
+        -   [Splay Tree](https://en.wikipedia.org/wiki/Splay_tree)
+            -   When a node x is accessed, a splay operation is
+                performed on x to move it to the root.
+            -   There are three types of splay steps, each of which
+                has a left- and right-handed case.
+                -   Zig Step: when p is the root. The tree is rotated
+                    on the edge between x and p.
+                -   Zig-zig Step: when p is not the root and x and p
+                    are either both right children or are both left
+                    children.
+                    -   Zig-zig steps are the only different thing that
+                        have splay trees from the (older) rotate to
+                        root method introduced by Allen and Munro.
+                -   Zig-zag Step: This step is done when p is not the
+                    root and x is a right child and p is a left child
+                    or vice versa. The tree is rotated on the edge
+                    between p and x, and then rotated on the resulting
+                    edge between x and g.
+        -   [AVL Tree](https://en.wikipedia.org/wiki/AVL_tree)
+            -   AVL trees are height-balanced. Both are in general not
+                weight-balanced nor μ-balanced.
+            -   Retracing one's steps toward the root updating the
+                balance factor of the nodes.
+-   [K-ary Trees](https://en.wikipedia.org/wiki/K-ary_tree)
+    -   Each node has no more than K children.
+-   [Trie-tree](https://en.wikipedia.org/wiki/Trie)
+    -   No node in the tree stores the key associated with that node.
+    -   Its position in the tree defines the key with which it is
+        associated.
+    -   All the descendants of a node have a common prefix
+        of the string associated with that node, and the root is
+        associated with the empty string.
+-   [Traversing trees](https://en.wikipedia.org/wiki/Tree_traversal#Depth-first)
+    -   Depth-first (DFS): Three types:
+        -   Pre-order:  1. Visit root.   2. Left subtree.  3. Right subtree.
+        -   In-order:   1. Left subtree. 2. Visit root.    3. Right subtree.
+        -   Post-order: 1. Left subtree. 2. Right subtree. 3. Visit root.
+    -   Breadth-first (BFS): visit every node on a level before going
+        to a lower level.
+
+
+Implementations:
+
+-   [Binary trees in Go](http://golang.org/doc/play/tree.go)

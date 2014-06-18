@@ -1,0 +1,6 @@
+﻿# HashTables
+
+References:
+
+-   [princeton.edu - 3.4   Hash Tables](http://algs4.cs.princeton.edu/34hash)
+-   [algolist.net - The very simple hash table example](http://www.algolist.net/Data_structures/Hash_table/Simple_example)

@@ -1,0 +1,17 @@
+﻿# Hashtable with Collision Resolution by Chaining
+
+When there is a collision (keys hash to the same slot), the incoming
+keys is stored in an overflow area and the corresponding record is
+appeared at the end of the linked list.
+
+Each slot `T[j]` contains a linked list of all the keys whose hash value is j.
+For example, `h(k1) = h(kn) and h(k5) = h(k2) = h(k7)`. The worst case running
+time for insertion is `O(1)`. Deletion of an element x can be accomplished in
+`O(1)` time if the lists are doubly linked. In the worst case behavior of
+chain-hashing, all n keys hash to the same slot, creating a list of length n.
+The worst-case time for search is thus `θ(n)` plus the time to compute the hash
+function.
+
+References:
+
+-   [Kent State University - Hash Table - Resolution by Chaining](http://www.personal.kent.edu/~rmuhamma/Algorithms/MyAlgorithms/hashTable.htm)
