@@ -8,7 +8,7 @@ function quickSort(a) {
 
     var left  = 0;
     var right = a.length - 1;
-    var pivot = Math.floor(a.length/2)-1;
+    var pivot = Math.floor(Math.random()*a.length);
 
     var a_pivot = a[pivot];
     a[pivot]    = a[right];
