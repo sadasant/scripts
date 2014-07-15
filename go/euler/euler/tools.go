@@ -1,5 +1,8 @@
 package euler
 
+import "io/ioutil"
+import "net/http"
+
 // Sieve of Erastosthenes
 // Ignoring even numbers.
 func PrimesUpTo(n int) []int {
@@ -17,4 +20,17 @@ func PrimesUpTo(n int) []int {
 		}
 	}
 	return primes[:c]
+}
+
+// Download files with GET
+func Download(path string) string {
+	Printf("Downloading %v\n", path)
+	resp, err := http.Get(path);
+	if err != nil {
+		return ""
+	}
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	Printf("Downloaded %v\n", path)
+	return string(body[:])
 }
