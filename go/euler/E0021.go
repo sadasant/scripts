@@ -4,19 +4,18 @@ import "github.com/sadasant/scripts/go/euler/euler"
 
 // From: http://www.mathblog.dk/project-euler-21-sum-of-amicable-pairs/
 func sumOfPrimeFactors(number int, primes *[]int) int {
-	var sum float32 = 1
-	var j float32
-	var i int
-	n := float32(number)
-	p := float32((*primes)[0])
+	sum := 1
+	var j, i int
+	n := number
+	p := (*primes)[0]
 	l := len(*primes)
 	for p * p <= n && n > 1 && i < l {
-		p = float32((*primes)[i])
+		p = (*primes)[i]
 		i++
-		if int(n) % int(p) == 0 {
+		if n % p == 0 {
 			j = p * p
 			n /= p
-			for int(n) % int(p) == 0 {
+			for n % p == 0 {
 				j *= p
 				n /= p
 			}
@@ -26,7 +25,7 @@ func sumOfPrimeFactors(number int, primes *[]int) int {
 	if n > 1 {
 		sum *= n+1
 	}
-	return int(sum) - number
+	return sum - number
 }
 
 func solution(n int) int {
