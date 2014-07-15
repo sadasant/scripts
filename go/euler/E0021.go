@@ -9,21 +9,21 @@ func sumOfPrimeFactors(number int, primes *[]int) int {
 	n := number
 	p := (*primes)[0]
 	l := len(*primes)
-	for p * p <= n && n > 1 && i < l {
+	for p*p <= n && n > 1 && i < l {
 		p = (*primes)[i]
 		i++
-		if n % p == 0 {
+		if n%p == 0 {
 			j = p * p
 			n /= p
-			for n % p == 0 {
+			for n%p == 0 {
 				j *= p
 				n /= p
 			}
-			sum *= (j-1)/(p-1)
+			sum *= (j - 1) / (p - 1)
 		}
 	}
 	if n > 1 {
-		sum *= n+1
+		sum *= n + 1
 	}
 	return sum - number
 }
@@ -37,7 +37,7 @@ func solution(n int) int {
 		if factors > i {
 			dict[i] = factors
 		} else if factors < i && dict[factors] == i {
-			sum += i + factors;
+			sum += i + factors
 		}
 	}
 	return sum
