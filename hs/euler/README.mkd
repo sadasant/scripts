@@ -1,0 +1,8 @@
+﻿Compile them this way:
+
+    ghc --make -O -rtsopts E0001.hs
+
+To check memory performance, run them this way:
+
+    ./E0001 +RTS -sstderr
+
