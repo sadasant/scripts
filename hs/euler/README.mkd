@@ -1,8 +1,22 @@
-﻿Compile them this way:
+﻿Compile this way:
+
+    ghc --make E0001.hs
+
+Run this way:
+
+    ./E0001
+
+Or check the time duration:
+
+    time ./E0001
+
+# To check memory performance
+
+Compile them this way:
 
     ghc --make -O -rtsopts E0001.hs
 
-To check memory performance, run them this way:
+Run them this way:
 
     ./E0001 +RTS -sstderr
 
