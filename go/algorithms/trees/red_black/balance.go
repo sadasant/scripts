@@ -1,6 +1,6 @@
 package red_black
 
-func Balance(t *RBTree) {
+func InsertBalance(t *RBTree) {
 	parnt := t.Parent
 	grand := t.Grandparent()
 	uncle := t.Uncle()
@@ -13,7 +13,7 @@ func Balance(t *RBTree) {
 		parnt.Red = false
 		uncle.Red = false
 		grand.Red = true
-		Balance(grand)
+		InsertBalance(grand)
 		return
 	} else {
 		switch {

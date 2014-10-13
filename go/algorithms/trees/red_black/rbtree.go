@@ -33,7 +33,7 @@ func (t *RBTree) Insert(v int) {
 	if v < t.Value {
 		if t.Left == nil {
 			t.Left = &RBTree{v, true, t, nil, nil}
-			Balance(t.Left)
+			InsertBalance(t.Left)
 			return
 		}
 		t.Left.Insert(v)
@@ -41,7 +41,7 @@ func (t *RBTree) Insert(v int) {
 	}
 	if t.Right == nil {
 		t.Right = &RBTree{v, true, t, nil, nil}
-		Balance(t.Right)
+		InsertBalance(t.Right)
 		return
 	}
 	t.Right.Insert(v)
