@@ -12,7 +12,7 @@ func Compare(t1, t2 *RBTree) bool {
 		if !ok1 || !ok2 {
 			return ok1 == ok2
 		}
-		if v1 != v2 {
+		if v1.Value != v2.Value {
 			break
 		}
 	}

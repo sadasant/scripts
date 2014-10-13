@@ -89,6 +89,17 @@ func (t *RBTree) Uncle() *RBTree {
 	return nil
 }
 
+func (t *RBTree) Sibling() *RBTree {
+	parnt := t.Parent
+	if parnt == nil {
+		return nil
+	}
+	if t == parnt.Left {
+		return parnt.Right
+	}
+	return parnt.Left
+}
+
 func (t *RBTree) FindRoot() *RBTree {
 	if t.Parent == nil {
 		return t

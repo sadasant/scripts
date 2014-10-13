@@ -78,3 +78,98 @@ func ExampleRedBlack() {
 	//5 -> 4 Red
 	//14 -> 15 Red
 }
+
+func TestDelete(t *testing.T) {
+
+	// Either the node to be removed or one of it's childs is red
+	tree := New(&RBTree{
+		30, false, nil,
+		&RBTree{
+			20, false, nil,
+			&RBTree{10, true, nil, nil, nil},
+			nil,
+		},
+		&RBTree{40, false, nil, nil, nil},
+	})
+	expected := New(&RBTree{
+		30, false, nil,
+		&RBTree{10, false, nil, nil, nil},
+		&RBTree{40, false, nil, nil, nil},
+	})
+	tree.Left.Delete()
+	if !Compare(tree, expected) {
+		t.Fatalf("Wanted:\n%s\nGot:\n%s\n", expected.String(), tree.String())
+	}
+	if err := RBCheck(tree); err != nil {
+		t.Errorf("Error: %s.\nTree:\n%s\n", err.Error(), tree.String())
+	}
+
+	// Deleting node is black and it's childs are black, also it's sibling is black, but it has one child red
+	tree = New(&RBTree{
+		30, false, nil,
+		&RBTree{20, false, nil, nil, nil},
+		&RBTree{
+			40, false, nil, nil,
+			&RBTree{50, true, nil, nil, nil},
+		},
+	})
+	expected = New(&RBTree{
+		40, false, nil,
+		&RBTree{30, false, nil, nil, nil},
+		&RBTree{50, false, nil, nil, nil},
+	})
+	tree.Left.Delete()
+	tree = tree.FindRoot()
+	if !Compare(tree, expected) {
+		t.Fatalf("Wanted:\n%s\nGot:\n%s\n", expected.String(), tree.String())
+	}
+	if err := RBCheck(tree); err != nil {
+		t.Errorf("Error: %s.\nTree:\n%s\n", err.Error(), tree.String())
+	}
+
+	// Deleting node is black, childs are black, sibling is black and sibling's childs are black
+	tree = New(&RBTree{
+		20, false, nil,
+		&RBTree{10, false, nil, nil, nil},
+		&RBTree{30, false, nil, nil, nil},
+	})
+	expected = New(&RBTree{
+		20, false, nil, nil,
+		&RBTree{30, true, nil, nil, nil},
+	})
+	tree.Left.Delete()
+	tree = tree.FindRoot()
+	if !Compare(tree, expected) {
+		t.Fatalf("Wanted:\n%s\nGot:\n%s\n", expected.String(), tree.String())
+	}
+	if err := RBCheck(tree); err != nil {
+		t.Errorf("Error: %s.\nTree:\n%s\n", err.Error(), tree.String())
+	}
+
+	// Sibling is red
+	tree = New(&RBTree{
+		20, false, nil,
+		&RBTree{10, false, nil, nil, nil},
+		&RBTree{
+			30, true, nil,
+			&RBTree{25, false, nil, nil, nil},
+			&RBTree{35, false, nil, nil, nil},
+		},
+	})
+	expected = New(&RBTree{
+		30, false, nil,
+		&RBTree{
+			20, false, nil, nil,
+			&RBTree{25, false, nil, nil, nil},
+		},
+		&RBTree{35, true, nil, nil, nil},
+	})
+	tree.Left.Delete()
+	tree = tree.FindRoot()
+	if !Compare(tree, expected) {
+		t.Fatalf("Wanted:\n%s\nGot:\n%s\n", expected.String(), tree.String())
+	}
+	if err := RBCheck(tree); err != nil {
+		t.Errorf("Error: %s.\nTree:\n%s\n", err.Error(), tree.String())
+	}
+}

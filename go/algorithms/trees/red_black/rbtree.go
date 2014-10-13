@@ -47,12 +47,113 @@ func (t *RBTree) Insert(v int) {
 	t.Right.Insert(v)
 }
 
+func (t *RBTree) Delete() {
+	parnt := t.Parent
+	if parnt == nil {
+		return
+	}
+	// If it's a red leaf
+	if t.Red && t.Left == nil && t.Right == nil {
+		if t == parnt.Left {
+			parnt.Left = nil
+		} else {
+			parnt.Right = nil
+		}
+		return
+	}
+	// Has one leaf and it's red or it leaf is red
+	if t.Left != nil && (t.Red || t.Left.Red) {
+		t.Left.Red = false
+		if t == parnt.Left {
+			parnt.Left = t.Left
+		} else {
+			parnt.Right = t.Left
+		}
+		return
+	}
+	if t.Right != nil && (t.Red || t.Right.Red) {
+		t.Right.Red = false
+		if t == parnt.Left {
+			parnt.Left = t.Right
+		} else {
+			parnt.Right = t.Right
+		}
+		return
+	}
+	sibli := t.Sibling()
+	if sibli == nil {
+		return
+	}
+	var r_left, r_right bool
+	if sibli.Left != nil {
+		r_left = sibli.Left.Red
+	}
+	if sibli.Right != nil {
+		r_right = sibli.Right.Red
+	}
+	// Double blacks and has at least one red child
+	if !sibli.Red {
+		if r_left || r_right {
+			switch {
+			case sibli == parnt.Left && r_left:
+				parnt.Right = nil
+				parnt.Left.Red = false
+				RotateRight(parnt)
+			case sibli == parnt.Left && r_right:
+				parnt.Right = nil
+				sibli.Right.Red = false
+				RotateLeft(sibli)
+				RotateRight(parnt)
+			case sibli == parnt.Right && r_right:
+				parnt.Left = nil
+				sibli.Right.Red = false
+				RotateLeft(parnt)
+			case sibli == parnt.Right && r_left:
+				parnt.Left = nil
+				sibli.Left.Red = false
+				RotateRight(sibli)
+				RotateLeft(parnt)
+			}
+			return
+		}
+		// Everyone is black
+		if sibli == parnt.Left {
+			parnt.Right = nil
+		}
+		if sibli == parnt.Right {
+			parnt.Left = nil
+		}
+		sibli.Red = true
+		parnt.Red = false
+		return
+	}
+	// Sibling is red
+	sibli.Red = false
+	if sibli == parnt.Right {
+		parnt.Left = nil
+		if sibli.Left != nil {
+			sibli.Left.Red = true
+		}
+		RotateLeft(parnt)
+	} else {
+		parnt.Right = nil
+		if sibli.Right != nil {
+			sibli.Right.Red = true
+		}
+		RotateRight(parnt)
+	}
+
+}
+
 // Prints something like graphviz's structures
 func (t *RBTree) String() (str string) {
 	ch := BreadthWalker(t)
 	for {
 		node, ok := <-ch
 		if !ok {
+			if str == "" {
+				return
+			}
 			return str[:len(str)-1]
 		}
 		if node.Left != nil {
