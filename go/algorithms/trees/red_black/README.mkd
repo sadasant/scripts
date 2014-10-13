@@ -1,0 +1,5 @@
+﻿Learning links:
+
+-   [Wikipedia: Red-black tree](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree)
+-   [Red-Black Tree | Set 2 (Insert)](http://www.geeksforgeeks.org/red-black-tree-set-2-insert/)
+-   [Data Structures and Algorithms: 8.2 Red-Black Tree Operation](https://www.cs.auckland.ac.nz/~jmor159/PLDS210/red_black_op.html)
