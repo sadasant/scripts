@@ -12,6 +12,7 @@ type RBTree struct {
 	Right  *RBTree
 }
 
+// This New function makes sure every node has it's parent
 func New(t *RBTree) *RBTree {
 	ch := BreadthWalker(t)
 	for {
@@ -46,6 +47,7 @@ func (t *RBTree) Insert(v int) {
 	t.Right.Insert(v)
 }
 
+// Prints something like graphviz's structures
 func (t *RBTree) String() (str string) {
 	ch := BreadthWalker(t)
 	for {
@@ -53,7 +55,6 @@ func (t *RBTree) String() (str string) {
 		if !ok {
 			return str[:len(str)-1]
 		}
-		// println(node.Value)
 		if node.Left != nil {
 			var red string
 			if node.Left.Red {
