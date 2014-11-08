@@ -5,7 +5,7 @@ if (window.READING) {
 } else {
     (function() {
         var READING = window.READING = {};
-        READING.speed   = 150;
+        READING.delay   = 150;
         READING.started = false;
         READING.stop    = false;
         READING.next    = 0;
@@ -134,10 +134,10 @@ if (window.READING) {
                         }
                     }
 
-                    setTimeout(next, READING.speed + PLUS);
+                    setTimeout(next, READING.delay + PLUS);
                 }
 
-                setTimeout(next, READING.speed);
+                setTimeout(next, READING.delay);
             }
 
             console.log("READING", text);
@@ -183,6 +183,10 @@ if (window.READING) {
                     scrollTo(p);
                     selectTextIn(p);
                 }
+                // shift+d: Change the delay until the next word.
+                if (e.shiftKey && e.keyCode === 68) {
+                    READING.delay = parseInt(prompt("Delay until the next word:", READING.delay), 10);
+                }
                 if (keydown) keydown();
             };
         }
@@ -195,7 +199,8 @@ if (window.READING) {
             "ESC: Stop reading.",
             "shift+s: Select the whole paragraph.",
             "shift+n: Select the next paragraph.",
-            "shift+p: Select the previous paragraph."
+            "shift+p: Select the previous paragraph.",
+            "shift+d: Change the delay until the next word."
         ].join("\n"));
     })();
 }
