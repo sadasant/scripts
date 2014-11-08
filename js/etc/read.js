@@ -1,5 +1,7 @@
-// Bookmark url:
+// Bookmark url (http):
 // javascript:(function(){var d=document,s=d.createElement('script');s.src='http://sadasant.com/js/read.js';d.body.appendChild(s);}())
+// Bookmark url (https):
+// javascript:(function(){var d=document,s=d.createElement('script');s.src='https://rawgit.com/sadasant/scripts/master/js/etc/read.js';d.body.appendChild(s);}())
 if (window.READING) {
     alert("READ is already available :)");
 } else {
