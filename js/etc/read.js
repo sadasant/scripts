@@ -11,6 +11,11 @@ if (window.READING) {
         READING.started = false;
         READING.stop    = false;
 
+        var invalid = {
+            parents:  ["A","B","EM","I", "#text"],
+            siblings: ["TABLE"]
+        };
+
         // Geting the slected text
         function getSelected() {
             var text = "";
@@ -31,8 +36,7 @@ if (window.READING) {
         // Getting the current paragraph
         function getParagraph() {
             var p = getSelected().selection.anchorNode;
-            var invalid = ["A","B","EM","I", "#text"];
-            while(invalid.indexOf(p.nodeName) >= 0) {
+            while(invalid.parents.indexOf(p.nodeName) >= 0) {
                 p = p.parentNode;
             }
             return p;
@@ -67,6 +71,8 @@ if (window.READING) {
                     el = el.parentNode;
                 }
                 el = el.nextSibling;
+                if (el.innerText === "") continue;
+                if (invalid.siblings.indexOf(el.nodeName) >= 0) continue;
                 if (el.nodeType == 1) break;
             }
             return el;
@@ -79,6 +85,8 @@ if (window.READING) {
                     el = el.parentNode;
                 }
                 el = el.previousSibling;
+                if (el.innerText === "") continue;
+                if (invalid.siblings.indexOf(el.nodeName) >= 0) continue;
                 if (el.nodeType == 1) break;
             }
             return el;
