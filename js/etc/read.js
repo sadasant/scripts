@@ -8,6 +8,8 @@ if (window.READING) {
     (function() {
         var READING = window.READING = {};
         READING.delay   = 100;
+        READING.extra   = 50;
+        READING.top     = 100;
         READING.started = false;
         READING.stop    = false;
 
@@ -45,7 +47,7 @@ if (window.READING) {
         // Scrolling to the given element
         function scrollTo(element) {
             element.scrollIntoView();
-            window.scrollTo(window.scrollX, window.scrollY - 100);
+            window.scrollTo(window.scrollX, window.scrollY - READING.top);
         }
 
         // Selecting the paragraph where the current selection is located
@@ -107,7 +109,7 @@ if (window.READING) {
             div.style.zIndex     = "999999999";
 
             txt.style.color      = "white";
-            txt.style.marginTop  = "100px";
+            txt.style.marginTop  = READING.top + "px";
             txt.style.fontSize   = "32px";
             txt.style.fontFamily = "arial";
 
@@ -167,17 +169,17 @@ if (window.READING) {
                     // Delaying the next call
                     // because of certain characters
                     // or word length
-                    var PLUS = 0;
+                    var EXTRA = 0;
                     if (word) {
                         if (word[word.length-1].match(/[,.:?!]/)) {
-                            PLUS = 25;
+                            EXTRA = 25;
                         }
                         if (word.length > 10) {
-                            PLUS = Math.floor(word.length/10) * 100;
+                            EXTRA = Math.floor(word.length/10) * READING.extra;
                         }
                     }
 
-                    setTimeout(next, READING.delay + PLUS);
+                    setTimeout(next, READING.delay + EXTRA);
                 }
 
                 setTimeout(next, READING.delay);
@@ -223,6 +225,7 @@ if (window.READING) {
                 // shift+d: Change the delay until the next word.
                 if (e.shiftKey && e.keyCode === 68) {
                     READING.delay = parseInt(prompt("Delay until the next word:", READING.delay), 10);
+                    READING.extra = parseInt(prompt("Extra delay for big words:", READING.extra), 10);
                 }
                 if (keydown) keydown();
             };
