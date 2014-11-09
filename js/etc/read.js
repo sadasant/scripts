@@ -10,7 +10,6 @@ if (window.READING) {
         READING.delay   = 150;
         READING.started = false;
         READING.stop    = false;
-        READING.next    = 0;
 
         // Geting the slected text
         function getSelected() {
@@ -49,6 +48,30 @@ if (window.READING) {
                 selection.removeAllRanges();
                 selection.addRange(range);
             }
+        }
+
+        // Gets the next sibling
+        function nextSibling(el) {
+            if (!el.nextSibling) {
+                el = el.parentNode;
+            }
+            el = el.nextSibling;
+            while(el.nodeType != 1) {
+                el = el.nextSibling;
+            }
+            return el;
+        }
+
+        // Gets the previous sibling
+        function prevSibling(el) {
+            if (!el.previousSibling) {
+                el = el.parentNode;
+            }
+            el = el.previousSibling;
+            while(el.nodeType != 1) {
+                el = el.previousSibling;
+            }
+            return el;
         }
 
         // Creating the reading widget
@@ -169,19 +192,13 @@ if (window.READING) {
                 }
                 // shift+n: Select the next paragraph.
                 if (e.shiftKey && e.keyCode === 78) {
-                    p = p.nextSibling;
-                    while(p.nodeType != 1) {
-                        p = p.nextSibling;
-                    }
+                    p = nextSibling(p);
                     scrollTo(p);
                     selectTextIn(p);
                 }
                 // shift+p: Select the previous paragraph.
                 if (e.shiftKey && e.keyCode === 80) {
-                    p = p.previousSibling;
-                    while(p.nodeType != 1) {
-                        p = p.previousSibling;
-                    }
+                    p = prevSibling(p);
                     scrollTo(p);
                     selectTextIn(p);
                 }
