@@ -28,6 +28,16 @@ if (window.READING) {
             };
         }
 
+        // Getting the current paragraph
+        function getParagraph() {
+            var p = getSelected().selection.anchorNode;
+            var invalid = ["A","B","EM","I", "#text"];
+            while(invalid.indexOf(p.nodeName) >= 0) {
+                p = p.parentNode;
+            }
+            return p;
+        }
+
         // Scrolling to the given element
         function scrollTo(element) {
             element.scrollIntoView();
@@ -185,7 +195,7 @@ if (window.READING) {
                 if (READING.started && e.keyCode === 27) {
                     READING.stop = true;
                 }
-                var p = getSelected().selection.anchorNode.parentNode;
+                var p = getParagraph();
                 // shift+s: Select the whole paragraph.
                 if (e.shiftKey && e.keyCode === 83) {
                     selectTextIn(p);
