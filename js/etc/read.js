@@ -62,24 +62,24 @@ if (window.READING) {
 
         // Gets the next sibling
         function nextSibling(el) {
-            if (!el.nextSibling) {
-                el = el.parentNode;
-            }
-            el = el.nextSibling;
-            while(el.nodeType != 1) {
+            while(true) {
+                if (!el.nextSibling) {
+                    el = el.parentNode;
+                }
                 el = el.nextSibling;
+                if (el.nodeType == 1) break;
             }
             return el;
         }
 
         // Gets the previous sibling
         function prevSibling(el) {
-            if (!el.previousSibling) {
-                el = el.parentNode;
-            }
-            el = el.previousSibling;
-            while(el.nodeType != 1) {
+            while(true) {
+                if (!el.previousSibling) {
+                    el = el.parentNode;
+                }
                 el = el.previousSibling;
+                if (el.nodeType == 1) break;
             }
             return el;
         }
