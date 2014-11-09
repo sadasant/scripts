@@ -7,7 +7,7 @@ if (window.READING) {
 } else {
     (function() {
         var READING = window.READING = {};
-        READING.delay   = 150;
+        READING.delay   = 100;
         READING.started = false;
         READING.stop    = false;
 
