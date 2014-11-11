@@ -10,6 +10,7 @@ if (window.READING) {
         READING.delay   = 100;
         READING.extra   = 100;
         READING.top     = 100;
+        READING.long    = 9;
         READING.started = false;
         READING.stop    = false;
 
@@ -174,8 +175,8 @@ if (window.READING) {
                         if (word.slice(-2).match(/[,.:?!]/)) {
                             EXTRA = READING.extra;
                         }
-                        if (word.length > 10) {
-                            EXTRA = Math.floor(word.length/10) * READING.extra;
+                        if (word.length > READING.long) {
+                            EXTRA = Math.floor(word.length/READING.long) * READING.extra;
                         }
                     }
 
