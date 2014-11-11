@@ -171,7 +171,7 @@ if (window.READING) {
                     // or word length
                     var EXTRA = 0;
                     if (word) {
-                        if (word[word.length-1].match(/[,.:?!]/)) {
+                        if (word.slice(-2).match(/[,.:?!]/)) {
                             EXTRA = READING.extra;
                         }
                         if (word.length > 10) {
