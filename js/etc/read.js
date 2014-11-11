@@ -172,7 +172,7 @@ if (window.READING) {
                     var EXTRA = 0;
                     if (word) {
                         if (word[word.length-1].match(/[,.:?!]/)) {
-                            EXTRA = 25;
+                            EXTRA = READING.extra;
                         }
                         if (word.length > 10) {
                             EXTRA = Math.floor(word.length/10) * READING.extra;
