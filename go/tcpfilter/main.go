@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"encoding/hex"
 	"fmt"
 	"log"
 	"os"
@@ -12,12 +13,12 @@ import (
 
 func main() {
 	if len(os.Args) < 2 {
-		println("Add a regexp parameter between double quotes")
+		println("Add a regexp query")
 		os.Exit(2)
 	}
 
 	args := strings.Join(os.Args[1:], " ")
-	println("args:", args)
+	println("Filtering by:", args)
 	reg, err := regexp.Compile(args)
 	if err != nil {
 		log.Fatal(err)
@@ -42,27 +43,43 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	hex_byte_reg, err := regexp.Compile("[0-9abcdef]{4}(\\s|$)")
+	if err != nil {
+		log.Fatal(err)
+	}
 	var lines []string
 	var reg_matched bool
 	for v := range ch {
 		if first_line_reg.MatchString(v) {
-			if reg_matched {
-				str_lines := strings.Join(lines, "\n")
-				matches := reg.FindAllStringSubmatchIndex(str_lines, -1)
-				move_right := 0
-				for _, k := range matches {
-					k[0] += move_right
-					k[1] += move_right
-					first := str_lines[0:k[0]]
-					last := str_lines[k[1]:]
-					match := str_lines[k[0]:k[1]]
-					green_match := Green(match)
-					str_lines = first + green_match + last
-					move_right += len(green_match) - len(match)
-				}
-				fmt.Println(str_lines)
-				reg_matched = false
+			str_lines := strings.Join(lines, "\n")
+			hex_bytes := hex_byte_reg.FindAllString(str_lines, -1)
+			hex_content := strings.Join(strings.Split(strings.Join(hex_bytes, ""), " "), "")
+			content, err := hex.DecodeString(hex_content)
+			str_content := onlyNiceCaracters(string(content))
+			if err != nil {
+				log.Fatal(err)
 			}
+			if reg_matched {
+				indexes := reg.FindAllStringSubmatchIndex(str_lines, -1)
+				str_lines = Paint(str_lines, indexes, Green)
+				fmt.Println(str_lines)
+			}
+			if reg.MatchString(str_content) {
+				if !reg_matched {
+					fmt.Println(str_lines)
+				}
+				println("Hex content:", hex_content)
+				indexes := reg.FindAllStringSubmatchIndex(str_content, -1)
+				str_content = Paint(str_content, indexes, Green)
+				println(fmt.Sprintf("Content MATCHED: %s", str_content))
+				println()
+			} else if reg_matched {
+				println("Hex content:", hex_content)
+				println(fmt.Sprintf("Content: %s", str_content))
+				println()
+			}
+			// Reset
+			reg_matched = false
 			lines = []string{}
 		}
 		lines = append(lines, v)
