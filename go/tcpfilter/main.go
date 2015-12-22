@@ -13,78 +13,99 @@ import (
 
 func main() {
 	if len(os.Args) < 2 {
-		println("Add a regexp query")
+		println("Use as: tcpfilter -tcpdump [tcpdump options] -filter [regexp]")
 		os.Exit(2)
 	}
 
 	args := strings.Join(os.Args[1:], " ")
-	println("Filtering by:", args)
-	reg, err := regexp.Compile(args)
+	println("args:", args)
+
+	tcpdump_params := "tcpdump -vv -s 0 -XX"
+	if matched, err := regexp.MatchString("-tcpdump", args); matched && err == nil {
+		tcpdump_params = "tcpdump" + strings.Split(args, "-tcpdump")[1]
+		// Removing -filter from tcpdump_params
+		if matched, err := regexp.MatchString("-filter", tcpdump_params); matched && err == nil {
+			tcpdump_params = strings.Split(tcpdump_params, "-filter")[0]
+		}
+	}
+	println(Bold("Running:"), tcpdump_params)
+
+	filter_param := ".*"
+	if matched, err := regexp.MatchString("-filter", args); matched && err == nil {
+		filter_param = strings.Split(args, "-filter")[1][1:]
+	}
+	println(Bold("Filtering by:"), filter_param)
+
+	filter, err := regexp.Compile(filter_param)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	// Port
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "31415"
-	}
-
 	ch := make(chan string)
 	go func() {
-		// sudo tcpdump -vv -s 0 -XX port 31415
-		err := RunCommandCh(ch, "\n", "sudo", "tcpdump", "-vv", "-s", "0", "-XX", "port", port)
+		err := RunCommandCh(ch, "\n", "sudo", strings.Split(tcpdump_params, " ")...)
 		if err != nil {
 			log.Fatal(err)
 		}
 	}()
 
-	first_line_reg, err := regexp.Compile("\\d{2}:\\d{2}:\\d{2}.\\d{6} IP \\(tos ")
+	// Match the first line of the tcpdump result
+	first_line_regexp, err := regexp.Compile("\\d{2}:\\d{2}:\\d{2}.\\d{6} IP \\(tos ")
 	if err != nil {
 		log.Fatal(err)
 	}
-	hex_byte_reg, err := regexp.Compile("[0-9abcdef]{4}(\\s|$)")
+
+	// Match all the hex bytes of the content of the packages
+	hex_byte_regexp, err := regexp.Compile("[0-9abcdef]{4}(\\s|$)")
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	var lines []string
-	var reg_matched bool
+	var filter_matched bool
 	for v := range ch {
-		if first_line_reg.MatchString(v) {
+
+		if first_line_regexp.MatchString(v) {
 			str_lines := strings.Join(lines, "\n")
-			hex_bytes := hex_byte_reg.FindAllString(str_lines, -1)
+
+			hex_bytes := hex_byte_regexp.FindAllString(str_lines, -1)
 			hex_content := strings.Join(strings.Split(strings.Join(hex_bytes, ""), " "), "")
-			content, err := hex.DecodeString(hex_content)
+			content, hex_err := hex.DecodeString(hex_content)
 			str_content := onlyNiceCaracters(string(content))
-			if err != nil {
-				log.Fatal(err)
-			}
-			if reg_matched {
-				indexes := reg.FindAllStringSubmatchIndex(str_lines, -1)
+
+			if filter_matched {
+				indexes := filter.FindAllStringSubmatchIndex(str_lines, -1)
 				str_lines = Paint(str_lines, indexes, Green)
 				fmt.Println(str_lines)
 			}
-			if reg.MatchString(str_content) {
-				if !reg_matched {
-					fmt.Println(str_lines)
+
+			if hex_err == nil {
+				if hex_err == nil && filter.MatchString(str_content) {
+					if !filter_matched {
+						fmt.Println(str_lines)
+					}
+					println("Hex content:", hex_content)
+					indexes := filter.FindAllStringSubmatchIndex(str_content, -1)
+					str_content = Paint(str_content, indexes, Green)
+					println(fmt.Sprintf("Content MATCHED: %s", str_content))
+					println()
+				} else if filter_matched {
+					println("Hex content:", hex_content)
+					println(fmt.Sprintf("Content: %s", str_content))
+					println()
 				}
-				println("Hex content:", hex_content)
-				indexes := reg.FindAllStringSubmatchIndex(str_content, -1)
-				str_content = Paint(str_content, indexes, Green)
-				println(fmt.Sprintf("Content MATCHED: %s", str_content))
-				println()
-			} else if reg_matched {
-				println("Hex content:", hex_content)
-				println(fmt.Sprintf("Content: %s", str_content))
+			} else if filter_matched {
 				println()
 			}
+
 			// Reset
-			reg_matched = false
+			filter_matched = false
 			lines = []string{}
 		}
+
 		lines = append(lines, v)
-		if reg.MatchString(v) {
-			reg_matched = true
+		if filter.MatchString(v) {
+			filter_matched = true
 		}
 	}
 }

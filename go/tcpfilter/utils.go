@@ -1,10 +1,15 @@
 package main
 
+const color_bold = "\x1b[1m"
 const color_green = "\x1b[32m"
 const color_normal = "\x1b[0m"
 
 func Green(s string) string {
 	return color_green + s + color_normal
+}
+
+func Bold(s string) string {
+	return color_bold + s + color_normal
 }
 
 func Paint(str string, indexes [][]int, color func(s string) string) string {
