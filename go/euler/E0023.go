@@ -20,6 +20,9 @@ func solution(file string) (total int) {
 	// 			divisors := proper_divisors(i)
 	// 			if sum(divisors) > i
 	// 				abundants = append(abundants, i)
+	// 				// If we sum the abundants here
+	// 				// by looping over existing abundants + the new one
+	// 				// we actually save some time
 	// 		for i in abundants
 	// 			for i in abundants
 	// 				aubundants_sum = append(abundants_sum)
