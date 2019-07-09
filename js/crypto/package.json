@@ -1,0 +1,29 @@
+{
+  "name": "crypto-tests",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc -p .",
+    "test": "npm run build && mocha *.spec.js"
+  },
+  "author": "Daniel Rodriguez (@sadasant)",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/chai": "^4.1.6",
+    "@types/mocha": "^5.2.5",
+    "@types/node": "^8.0.0",
+    "@typescript-eslint/eslint-plugin": "^1.11.0",
+    "@typescript-eslint/parser": "^1.11.0",
+    "chai": "^4.2.0",
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^4.2.0",
+    "eslint-detailed-reporter": "^0.8.0",
+    "eslint-plugin-no-null": "^1.0.2",
+    "eslint-plugin-no-only-tests": "^2.3.0",
+    "eslint-plugin-promise": "^4.1.1",
+    "mocha": "^5.2.0",
+    "prettier": "^1.16.4",
+    "typescript": "^3.2.2"
+  }
+}
