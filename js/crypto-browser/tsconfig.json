@@ -17,7 +17,11 @@
     "importHelpers": true,
     "declarationDir": "./types",
     "lib": ["dom", "es5", "es6", "es7", "esnext"],
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "baseUrl": "./",
+    "paths": {
+      "pkijs": ["node_modules/pkijs"]
+    }
   },
   "compileOnSave": true,
   "exclude": ["node_modules"],
