@@ -26,7 +26,7 @@ describe(`RSA-OAEP algorithm`, () => {
     padding: crypto.constants.RSA_PKCS1_OAEP_PADDING
   };
 
-  it("envrypt and decrypt", async function(): Promise<void> {
+  it("encrypt and decrypt", async function(): Promise<void> {
     const value = getTitles(this);
     const encrypted = crypto.publicEncrypt(
       {
